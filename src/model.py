@@ -1,3 +1,10 @@
+class Char:
+    def __init__(self, value):
+        self.value = value
+
+    def __repr__(self):
+        return f'Char({self.value})'
+
 class Type:
 
     def __init__(self, value):
@@ -30,6 +37,9 @@ class Integer:
 
     def __repr__(self):
         return f'Integer({self.value})'
+
+    def __str__(self):
+        return str(self.value)
 
 class Float:
     '''
@@ -155,10 +165,16 @@ class WhileStmt:
 def to_source_list(node_list):
     ret_str = ""
     for node in node_list:
-        ret_str += f'    {to_source(node)}\n' 
+        ret_str += f'''{to_source(node)}\n''' 
 
     return ret_str
 
+def to_source_neo(node_list):
+    ret_str = ""
+    for node in node_list:
+        ret_str += f'''    {to_source(node)}\n'''
+
+    return ret_str
 def to_source_singleline(node_list):
     ret_str = ""
     for node in node_list:
@@ -169,7 +185,7 @@ def to_source_singleline(node_list):
 def to_source(node):
 
     if isinstance(node, Integer):
-        return repr(node.value)
+        return str(node.value)
     elif isinstance(node, Float):
         return repr(node.value)
     elif isinstance(node, Name):
@@ -177,7 +193,7 @@ def to_source(node):
     elif isinstance(node, Statement):
         return f'{to_source(node.expr)};'
     elif isinstance(node, CompoundStmt):
-        return f'{{{to_source_singleline(node.expr)}}}' 
+        return f'{to_source_list(node.expr)}' 
     elif isinstance(node, Type):
         return str(node.value)
     elif isinstance(node, BinOp):
@@ -204,6 +220,7 @@ def to_source(node):
     elif isinstance(node, ElseStmt):
         return f'else {{\n{to_source_list(node.stmtlist)}}}'
     elif isinstance(node, WhileStmt):
-        return f'while {to_source(node.cond)} {{\n{to_source_list(node.stmtlist)}}}'
+        
+        return f'''while {to_source(node.cond)} {{\n{to_source_neo(node.stmtlist.expr)}}}'''
     else:
         raise RuntimeError(f"Can't convert {node} to source")
