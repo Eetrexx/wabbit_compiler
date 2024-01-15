@@ -129,6 +129,14 @@ class Assignment:
     def __repr__(self):
         return f'Assignment({self.location}, {self.expr})'
 
+class ContinueStmt:
+    def __repr__(self):
+        return f'ContinueStmt()'
+
+class BreakStmt:
+    def __repr__(self):
+        return f'BreakStmt()'
+
 class IfStmt:
 
     def __init__(self, cond, stmtlist, else_stmt=None):
@@ -222,5 +230,9 @@ def to_source(node):
     elif isinstance(node, WhileStmt):
         
         return f'''while {to_source(node.cond)} {{\n{to_source_neo(node.stmtlist.expr)}}}'''
+    elif isinstance(node, ContinueStmt):
+        return f'continue;'
+    elif isinstance(node, BreakStmt):
+        return f'break;'
     else:
         raise RuntimeError(f"Can't convert {node} to source")

@@ -149,6 +149,16 @@ def parse_assignment(tokens):
 
     return ret_val
 
+def parse_continue_statement(tokens):
+    ret_val = ContinueStmt()
+    tokens.index += 2
+    return ret_val
+
+def parse_break_statement(tokens):
+    ret_val = BreakStmt()
+    tokens.index += 2
+    return ret_val
+
 def parse_statement(tokens):
     ret_val = None
     

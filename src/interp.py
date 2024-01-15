@@ -67,8 +67,16 @@ def interpret_statement(node, env):
 
 def interpret_compound_stmt(node, env):
     for n in node.expr:
-        ret_val = interpret(n, env)
+        if isinstance(n, CompoundStmt):
+            ret_val = "continue"
+            return ret_val
+        elif isinstance(n, BreakStmt):
+            ret_val = "break"
+            return ret_val
+        else:
+            ret_val = interpret(n, env)
     return ret_val
+
 def interpret_vardef(node, env):
     
     if node.expr:
@@ -98,8 +106,18 @@ def interpret_else_stmt(node, env):
 def interpret_while_stmt(node, env):
     cond = interpret(node.cond, env)
     while cond:
-        interpret(node.stmtlist, env)
+        loop_exit = interpret(node.stmtlist, env)
+
         cond = interpret(node.cond, env)
+
+        if loop_exit == "continue":
+            continue
+        elif loop_exit == "break":
+            break
+        else:
+            pass
+
+
 
 # Internal function to interpret a node in the environment
 def interpret(node, env):
