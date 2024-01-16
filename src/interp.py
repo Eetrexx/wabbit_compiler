@@ -67,14 +67,9 @@ def interpret_statement(node, env):
 
 def interpret_compound_stmt(node, env):
     for n in node.expr:
-        if isinstance(n, CompoundStmt):
-            ret_val = "continue"
+        ret_val = interpret(n, env)
+        if ret_val in [ 'break', 'continue' ]:
             return ret_val
-        elif isinstance(n, BreakStmt):
-            ret_val = "break"
-            return ret_val
-        else:
-            ret_val = interpret(n, env)
     return ret_val
 
 def interpret_vardef(node, env):
@@ -96,9 +91,9 @@ def interpret_constdef(node, env):
 def interpret_ifstmt(node, env):
     cond = interpret(node.cond, env)
     if cond:
-        interpret(node.stmtlist, env)
+        return interpret(node.stmtlist, env)
     elif node.else_stmt:
-        interpret(node.else_stmt, env)
+        return interpret(node.else_stmt, env)
 
 def interpret_else_stmt(node, env):
     interpret(node.stmtlist, env)
@@ -107,6 +102,7 @@ def interpret_while_stmt(node, env):
     cond = interpret(node.cond, env)
     while cond:
         loop_exit = interpret(node.stmtlist, env)
+
 
         cond = interpret(node.cond, env)
 
@@ -118,6 +114,14 @@ def interpret_while_stmt(node, env):
             pass
 
 
+def interpret_continue_stmt(node, env):
+    return "continue"
+
+def interpret_break_stmt(node, env):
+    return "break"
+
+def interpret_char(node, env):
+    return node.value
 
 # Internal function to interpret a node in the environment
 def interpret(node, env):
@@ -147,6 +151,12 @@ def interpret(node, env):
         return interpret_else_stmt(node, env)
     elif isinstance(node, WhileStmt):
         return interpret_while_stmt(node, env)
+    elif isinstance(node, ContinueStmt):
+        return interpret_continue_stmt(node, env)
+    elif isinstance(node, BreakStmt):
+        return interpret_break_stmt(node, env)
+    elif isinstance(node, Char):
+        return interpret_char(node, env)
     # Expand to check for different node types
     # ...
     raise RuntimeError(f"Can't interpret {node}")

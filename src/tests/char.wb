@@ -1,0 +1,9 @@
+%%file char.wb
+/* print characters */
+
+print 'H' ;
+print 'e' ;
+print 'l' ;
+print 'l' ;
+print 'o' ;
+

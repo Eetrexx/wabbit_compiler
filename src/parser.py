@@ -16,7 +16,7 @@ def parse_factor(tokens):
     elif tokens.items[tokens.index].type == 'NAME':
         ret = Name(f'{tokens.items[tokens.index].value}')
     elif tokens.items[tokens.index].type == 'CHAR':
-        ret = Char(tokens.items[tokens.index].value)
+        ret = Char(f'{tokens.items[tokens.index].value}')
     elif tokens.items[tokens.index].type == 'LPAREN':
         tokens.index += 1
         ret = parse_cond(tokens)

@@ -221,18 +221,16 @@ def tokenize(text):
         elif text[pos] == "'":
             index = pos
             type = 'CHAR'
-            value += text[pos]
             pos += 1
             while text[pos] != "'":
                 value += text[pos]
                 pos += 1
 
-            value += text[pos]
             pos += 1
             end = pos
 
         elif text[pos] == '\n':
-            while text[pos].isspace():
+            while pos < len(text) - 1 and text[pos].isspace():
                 pos += 1
 
             lineno += 1

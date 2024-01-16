@@ -1,0 +1,12 @@
+%%file continue_example.wb
+/* Use the continue statement in a while loop */
+
+var n int = 1;
+
+while n < 10 {
+    n = n + 1;
+    if n == 5 {
+        continue;
+    }
+    print n ;
+}
