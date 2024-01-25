@@ -101,6 +101,7 @@ def tokenize(text):
                 while text[pos] != '\n':
                     pos += 1
                 pos += 1
+                lineno += 1
             elif text[pos+1] == '*':
                 pos += 2
                 while text[pos] != '*' and text[pos+1] != '/':

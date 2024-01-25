@@ -1,6 +1,13 @@
-class Char:
-    def __init__(self, value):
+class Node:
+    def __init__(self, lineno):
+        self.lineno = lineno
+
+
+
+class Char(Node):
+    def __init__(self, value, lineno):
         self.value = value
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'Char({self.value})'
@@ -8,16 +15,18 @@ class Char:
     def __str__(self):
         return self.value
 
-class Unit:
-    def __init__(self):
+class Unit(Node):
+    def __init__(self, lineno):
         self.value = "()"
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'Unit()'
 
-class Boolean:
-    def __init__(self, value):
+class Boolean(Node):
+    def __init__(self, value, lineno):
         self.value = value
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'Boolean({self.value})'
@@ -25,10 +34,11 @@ class Boolean:
     def __str__(self):
         return self.value
     
-class Type:
+class Type(Node):
 
-    def __init__(self, value):
+    def __init__(self, value, lineno):
         self.value = value
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'Type({self.value})'
@@ -37,10 +47,11 @@ class Type:
         return self.value
     
     
-class Name:
+class Name(Node):
 
-    def __init__(self, value):
+    def __init__(self, value, lineno):
         self.value = value
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'Name({self.value})'
@@ -48,12 +59,13 @@ class Name:
     def __str__(self):
         return self.value
         
-class Integer:
+class Integer(Node):
     '''
     Example: 42
     '''
-    def __init__(self, value):
+    def __init__(self, value, lineno):
         self.value = value
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'Integer({self.value})'
@@ -61,56 +73,62 @@ class Integer:
     def __str__(self):
         return str(self.value)
 
-class Float:
+class Float(Node):
     '''
     Example: 42
     '''
-    def __init__(self, value):
+    def __init__(self, value, lineno):
         self.value = value
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'Float({self.value})'
 
-class UnaryOp:
+class UnaryOp(Node):
 
-    def __init__(self, op, expr):
+    def __init__(self, op, expr, lineno):
         self.op = op
         self.expr = expr
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'UnaryOp({self.op}, {self.expr})'
 
-class BinOp:
+class BinOp(Node):
     '''
     Example: left + right
     '''
-    def __init__(self, op, left, right):
+    def __init__(self, op, left, right, lineno):
         self.op = op
         self.left = left
         self.right = right
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'BinOp({self.op}, {self.left}, {self.right})'
 
-class PrintStmt:
+class PrintStmt(Node):
 
-    def __init__(self, expr):
+    def __init__(self, expr, lineno):
         self.expr = expr
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'PrintStmt({self.expr})'
 
 
-class Const:
-    def __init__(self, name):
+class Const(Node):
+    def __init__(self, name, lineno):
         self.name = name
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'Const({self.name})'
 
-class Variable:
-    def __init__(self, name):
+class Variable(Node):
+    def __init__(self, name, lineno):
         self.name = name
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'Variable({self.name})'
@@ -122,39 +140,44 @@ class CompoundStmt:
         
     def __repr__(self):
         return f'CompoundStmt({self.expr})'
-class Statement:
 
-    def __init__(self, expr):
+class Statement(Node):
+
+    def __init__(self, expr, lineno):
         self.expr = expr
+        super().__init__(lineno)
         
     def __repr__(self):
         return f'Statement({self.expr})'
 
-class ConstDef:
+class ConstDef(Node):
 
-    def __init__(self, name, type=None, expr=None):
+    def __init__(self, name, type=None, expr=None, lineno=None):
         self.name = name
         self.type = type
         self.expr = expr
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'ConstDef({self.name}, {self.type}, {self.expr})'
 
-class VarDef:
+class VarDef(Node):
     
-    def __init__(self, name, type=None, expr=None):
+    def __init__(self, name, type=None, expr=None, lineno=None):
         self.name = name
         self.type = type
         self.expr = expr
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'VarDef({self.name}, {self.type}, {self.expr})'
 
-class Assignment:
+class Assignment(Node):
 
-    def __init__(self, location, expr):
+    def __init__(self, location, expr, lineno):
         self.location = location
         self.expr = expr
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'Assignment({self.location}, {self.expr})'
@@ -167,21 +190,23 @@ class BreakStmt:
     def __repr__(self):
         return f'BreakStmt()'
 
-class IfStmt:
+class IfStmt(Node):
 
-    def __init__(self, cond, stmtlist, else_stmt=None):
+    def __init__(self, cond, stmtlist, else_stmt=None, lineno=None):
         self.cond = cond
         self.stmtlist = stmtlist
         self.else_stmt = else_stmt
+        super().__init__(lineno)
 
     def __repr__(self):
         return f'IfStmt({self.cond}, {self.stmtlist}, {self.else_stmt})'
 
-class ElseStmt:
+class ElseStmt(Node):
     
-    def __init__(self, stmtlist):
+    def __init__(self, stmtlist, lineno):
         
         self.stmtlist = stmtlist
+        super().__init__(lineno)
         
 
     def __repr__(self):

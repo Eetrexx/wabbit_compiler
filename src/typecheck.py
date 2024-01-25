@@ -1,5 +1,14 @@
 from model import *
 # Top-level function used to check programs
+
+
+has_errors = False
+
+def error_msg(lineno, text):
+
+    print(f'{lineno}: {text}')
+    has_erros = True
+
 def check_program(model):
     env = { }
     env["const"] = { }
@@ -7,6 +16,8 @@ def check_program(model):
 
     check(model, env)
     # Maybe return True/False if there are errors
+
+    return not has_errors
 
 _binops = {
     # ('lefttype', 'op', 'righttype') : 'resulttype'
@@ -37,22 +48,22 @@ _binops = {
     ('char', '<', 'char') : 'bool',
     ('char', '==', 'char') : 'bool',
     ('char', '!=', 'char') : 'bool',
-    ('unit', '!=', 'char') : 'bool',
-    ('unit', '==', 'char') : 'bool',
-    ('char', '==', 'unit') : 'bool',
-    ('char', '!=', 'unit') : 'bool',
-    ('unit', '!=', 'int') : 'bool',
-    ('unit', '==', 'int') : 'bool',
-    ('int', '==', 'unit') : 'bool',
-    ('int', '!=', 'unit') : 'bool',
-    ('unit', '!=', 'float') : 'bool',
-    ('unit', '==', 'float') : 'bool',
-    ('float', '==', 'unit') : 'bool',
-    ('float', '!=', 'unit') : 'bool',
-    ('unit', '!=', 'bool') : 'bool',
-    ('unit', '==', 'bool') : 'bool',
-    ('bool', '==', 'unit') : 'bool',
-    ('bool', '!=', 'unit') : 'bool',
+   # ('unit', '!=', 'char') : 'bool',
+   # ('unit', '==', 'char') : 'bool',
+   # ('char', '==', 'unit') : 'bool',
+   # ('char', '!=', 'unit') : 'bool',
+   # ('unit', '!=', 'int') : 'bool',
+   # ('unit', '==', 'int') : 'bool',
+   # ('int', '==', 'unit') : 'bool',
+   # ('int', '!=', 'unit') : 'bool',
+   # ('unit', '!=', 'float') : 'bool',
+   # ('unit', '==', 'float') : 'bool',
+   # ('float', '==', 'unit') : 'bool',
+   # ('float', '!=', 'unit') : 'bool',
+   # ('unit', '!=', 'bool') : 'bool',
+   # ('unit', '==', 'bool') : 'bool',
+   # ('bool', '==', 'unit') : 'bool',
+   # ('bool', '!=', 'unit') : 'bool',
     ('unit', '!=', 'unit') : 'bool',
     ('unit', '==', 'unit') : 'bool'
 }
@@ -70,7 +81,7 @@ def check_unaryop(node, env):
     result_type = _unaryops.get((node.op, expr))
 
     if result_type is None:
-        raise RuntimeError(f'Error: unsupported unary operation')
+        error_msg(node.expr.lineno, "Error: unsupported unary operation")
 
     return result_type
 
@@ -80,7 +91,8 @@ def check_binop(node, env):
 
     result_type = _binops.get((left_type, node.op, right_type))
     if result_type is None:
-        raise RuntimeError(f"Type mismatch! {left_type} {node.op} {right_type}")
+        text = f"Error: Type mismatch: {left_type} {node.op} {right_type}"
+        error_msg(node.left.lineno, text)
 
     return result_type
 
@@ -91,7 +103,10 @@ def check_declaration(node, env):
 
         if node.type:
             if node.type.value != right_type:
-                raise RuntimeError(f'Error: expected {node.type} on variable declaration - got {right_type}' )
+                text = f"Error: expected {node.type} on variable declaration - got {right_type}"
+                error_msg(node.lineno, text)
+                return None 
+
         if isinstance(node, VarDef):
             env["var"][node.name.value] = right_type
         elif isinstance(node, ConstDef):
@@ -100,16 +115,24 @@ def check_declaration(node, env):
         if isinstance(node, VarDef):
             env["var"][node.name.value] = node.type.value 
         elif isinstance(node, ConstDef):
-            raise RuntimeError(f'Error: const declaration expects a value')
+            error_msg(node.lineno, "Error: const declaration expects a value")
+            return None 
     else:
-        raise RuntimeError(f'Error: variable declaration without any type or value')
+        error_msg(node.lineno, "Error: variable declaration without any type or value")
+        return None 
 
 def check_assignment(node, env):
     left_type = check(node.location, env)
     right_type = check(node.expr, env)
 
+    if env["const"][node.location.value]:
+        text = f"Error: '{node.location.value}' is immutable"
+        error_msg(node.lineno, text)
+
     if left_type != right_type:
-        raise RuntimeError(f"Error: incompatible types in assignment ({left_type} and {right_type})")
+        text = f"Error: incompatible types in assignment ({left_type} and {right_type})"
+        error_msg(node.lineno, text)
+
 
 def check_name(node, env):
     ret_val = None
@@ -118,7 +141,9 @@ def check_name(node, env):
     elif node.value in env["var"]:
         ret_val = env["var"][node.value]
     else:
-        raise RuntimeError(f"Error: {node.value} is not defined")
+        text = f"Error: '{node.value}' is not defined"
+        error_msg(node.lineno, text)
+
     return ret_val
 
 def check_if_stmt(node, env):

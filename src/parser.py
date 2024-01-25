@@ -10,18 +10,18 @@ class TokenList:
 
 def parse_factor(tokens):
     if tokens.items[tokens.index].type == 'INTEGER':
-        ret = Integer(int(tokens.items[tokens.index].value))
+        ret = Integer(int(tokens.items[tokens.index].value), tokens.items[tokens.index].lineno)
     elif tokens.items[tokens.index].type == 'FLOAT':
-        ret = Float(float(tokens.items[tokens.index].value))
+        ret = Float(float(tokens.items[tokens.index].value), tokens.items[tokens.index].lineno)
     elif tokens.items[tokens.index].type in ['TRUE', 'FALSE']:
-        ret = Boolean(tokens.items[tokens.index].value)
+        ret = Boolean(tokens.items[tokens.index].value, tokens.items[tokens.index].lineno)
     elif tokens.items[tokens.index].type == 'NAME':
-        ret = Name(f'{tokens.items[tokens.index].value}')
+        ret = Name(f'{tokens.items[tokens.index].value}', tokens.items[tokens.index].lineno)
     elif tokens.items[tokens.index].type == 'CHAR':
-        ret = Char(f'{tokens.items[tokens.index].value}')
+        ret = Char(f'{tokens.items[tokens.index].value}', tokens.items[tokens.index].lineno)
     elif tokens.items[tokens.index].type == 'LPAREN':
         if tokens.items[tokens.index+1].type == 'RPAREN':
-            ret = Unit()
+            ret = Unit(tokens.items[tokens.index].lineno)
             tokens.index += 1
         else:
             tokens.index += 1
@@ -43,7 +43,7 @@ def parse_unary(tokens):
     else:
         op = tokens.items[tokens.index].value
         tokens.index += 1
-        return UnaryOp(op, parse_factor(tokens))
+        return UnaryOp(op, parse_factor(tokens), tokens.items[tokens.index].lineno)
         
 
 def parse_term(tokens):
@@ -55,7 +55,7 @@ def parse_term(tokens):
         else:
             op = tokens.items[tokens.index].value
             tokens.index += 1
-        unary = BinOp(op, unary, parse_unary(tokens))
+        unary = BinOp(op, unary, parse_unary(tokens), tokens.items[tokens.index].lineno)
 
 def parse_expression(tokens):
     term = parse_term(tokens)
@@ -67,7 +67,7 @@ def parse_expression(tokens):
             op = tokens.items[tokens.index].value
             tokens.index += 1
 
-        term = BinOp(op, term, parse_term(tokens))
+        term = BinOp(op, term, parse_term(tokens), tokens.items[tokens.index].lineno)
 
 def parse_cond(tokens):
     expr = parse_expression(tokens)
@@ -79,7 +79,7 @@ def parse_cond(tokens):
             op = tokens.items[tokens.index].value
             tokens.index += 1
 
-        expr = BinOp(op, expr, parse_expression(tokens))
+        expr = BinOp(op, expr, parse_expression(tokens), tokens.items[tokens.index].lineno)
 
 def parse_print_statement(tokens):
     tokens.index += 1
@@ -88,7 +88,7 @@ def parse_print_statement(tokens):
     if tokens.items[tokens.index].type != 'SEMI':
         raise RuntimeError(f'Error at line number {tokens.items[tokens.index].lineno}: expected ; at the end')
     tokens.index += 1
-    return PrintStmt(expr)
+    return PrintStmt(expr, tokens.items[tokens.index].lineno)
 
 def parse_var_def(tokens):
     tokens.index += 1
@@ -96,22 +96,22 @@ def parse_var_def(tokens):
         if tokens.items[tokens.index+1].value in ['int', 'float', 'char', 'bool']:
             if tokens.items[tokens.index+2].type == 'SEMI':
                 
-                name = Name(f'{tokens.items[tokens.index].value}')
-                type = Type(f'{tokens.items[tokens.index+1].value}')
-                vardef = VarDef(name, type, None)
+                name = Name(f'{tokens.items[tokens.index].value}', tokens.items[tokens.index].lineno)
+                type = Type(f'{tokens.items[tokens.index+1].value}', tokens.items[tokens.index].lineno)
+                vardef = VarDef(name, type, None, tokens.items[tokens.index].lineno)
                 tokens.index += 3
             elif tokens.items[tokens.index+2].type == 'ASSIGN':
-                name = Name(f'{tokens.items[tokens.index].value}')
-                type = Type(f'{tokens.items[tokens.index+1].value}')
+                name = Name(f'{tokens.items[tokens.index].value}', tokens.items[tokens.index].lineno)
+                type = Type(f'{tokens.items[tokens.index+1].value}', tokens.items[tokens.index].lineno)
                 tokens.index += 3
-                vardef = VarDef(name, type, parse_cond(tokens))
+                vardef = VarDef(name, type, parse_cond(tokens), tokens.items[tokens.index].lineno)
 
             else:
                 raise RuntimeError(f'Error on lineno {tokens.items[tokens.index].lineno} - invalid variable declaration')
         elif tokens.items[tokens.index+1].type == 'ASSIGN':
-            name = Name(f'{tokens.items[token.index].value}')
+            name = Name(f'{tokens.items[token.index].value}', tokens.items[tokens.index].lineno)
             tokens += 2
-            vardef = VarDef(name, None, parse_cond(tokens))
+            vardef = VarDef(name, None, parse_cond(tokens), tokens.items[tokens.index].lineno)
         else:
             raise RuntimeError(f'Error on lineno {tokens.items[tokens.index].lineno} - invalid variable type')
     else:
@@ -125,15 +125,15 @@ def parse_const_def(tokens):
     if tokens.items[tokens.index].type == 'NAME':
         if tokens.items[tokens.index+1].value in ['int', 'float','char','bool']:
             if tokens.items[tokens.index+2].type == 'ASSIGN':
-                name = Name(f'{tokens.items[tokens.index].value}')
-                type = Type(f'{tokens.items[tokens.index+1].value}')
+                name = Name(f'{tokens.items[tokens.index].value}', tokens.items[tokens.index].lineno)
+                type = Type(f'{tokens.items[tokens.index+1].value}', tokens.items[tokens.index].lineno)
                 tokens.index += 3
-                constdef = ConstDef(name, type, parse_cond(tokens))
+                constdef = ConstDef(name, type, parse_cond(tokens), tokens.items[tokens.index].lineno)
                 
         elif tokens.items[tokens.index+1].type == 'ASSIGN':
-            name = tokens.items[tokens.index].value
+            name = Name(f'{tokens.items[tokens.index].value}', tokens.items[tokens.index].lineno)
             tokens.index += 2
-            constdef = ConstDef(name, None, parse_cond(tokens))
+            constdef = ConstDef(name, None, parse_cond(tokens), tokens.items[tokens.index].lineno)
         else:
             raise RuntimeError(f'Error on lineno {tokens[0].lineno} - invalid constant definition')
     else:
@@ -150,7 +150,7 @@ def parse_if_statement(tokens):
     if tokens.items[tokens.index].type == 'ELSE':
         else_statement = parse_else_statement(tokens)
     
-    return IfStmt(cond, statements, else_statement)
+    return IfStmt(cond, statements, else_statement, tokens.items[tokens.index].lineno)
 
 def parse_else_statement(tokens):
     tokens.index += 1
@@ -160,7 +160,7 @@ def parse_else_statement(tokens):
     elif tokens.items[tokens.index].type == 'IF':
         statements = parse_if_statement(tokens)
 
-    return ElseStmt(statements)
+    return ElseStmt(statements, tokens.items[tokens.index].lineno)
 
 def parse_while_statement(tokens):
 
@@ -174,10 +174,10 @@ def parse_while_statement(tokens):
 
 
 def parse_assignment(tokens):
-    name = Name(f'{tokens.items[tokens.index].value}')
+    name = Name(f'{tokens.items[tokens.index].value}', tokens.items[tokens.index].lineno)
 
     tokens.index += 2
-    ret_val = Assignment(name, parse_cond(tokens))
+    ret_val = Assignment(name, parse_cond(tokens), tokens.items[tokens.index].lineno)
 
     return ret_val
 
