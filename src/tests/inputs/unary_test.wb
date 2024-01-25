@@ -1,0 +1,14 @@
+%%file unary_test.wb
+/* unary operations testing */
+
+var n bool = true;
+var value int = 5;
+var second_value int;
+
+n = !n;
+value = -value;
+second_value = -(2 + 2 * 3)
+
+print n;
+print value;
+print second_value;

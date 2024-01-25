@@ -12,9 +12,29 @@ def interpret_program(model):
 def interpret_integer(node, env):
     return node.value
 
+def interpret_boolean(node, env):
+    if node.value == "true":
+        return True
+    elif node.value == "false":
+        return False
+
 def interpret_float(node, env):
     return node.value
+
+def interpret_unit(node, env):
+    return None
     
+def interpret_unaryop(node, env):
+    value = interpret(node.expr, env)
+    if node.op == '+':
+        return 0 + value
+    elif node.op == '-':
+        return 0 - value
+    elif node.op == '!':
+        return not value
+    else:
+        raise RuntimeError(f'Error: unsupported unary operation')
+
 def interpret_binop(node, env):
     leftval = interpret(node.left, env)
     rightval = interpret(node.right, env)
@@ -32,6 +52,16 @@ def interpret_binop(node, env):
     elif node.op == '>':
         return leftval > rightval
     elif node.op == '==':
+        return leftval == rightval
+    elif node.op == '!=':
+        return leftval == rightval
+    elif node.op == '>=':
+        return leftval == rightval
+    elif node.op == '<=':
+        return leftval == rightval
+    elif node.op == '&&':
+        return leftval == rightval
+    elif node.op == '||':
         return leftval == rightval
     # Expand to check for different operators
     # ...
@@ -129,8 +159,14 @@ def interpret(node, env):
         return interpret_integer(node, env)
     elif isinstance(node, Float):
         return interpret_float(node, env)
+    elif isinstance(node, Boolean):
+        return interpret_boolean(node, env)
+    elif isinstance(node, Unit):
+        return interpret_unit(node, env)
     elif isinstance(node, BinOp):
         return interpret_binop(node, env)
+    elif isinstance(node, UnaryOp):
+        return interpret_unaryop(node, env)
     elif isinstance(node, Name):
         return interpret_name(node, env)
     elif isinstance(node, Statement):

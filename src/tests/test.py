@@ -4,6 +4,7 @@ from model import *
 from interp import *
 from tokenize import *
 from parser import *
+from typecheck import *
 
 def main():
     op = sys.argv[1]
@@ -28,6 +29,9 @@ def main():
     elif op == "tokenize":
         for tok in tokenize(text):
             print(tok)
+
+    elif op == "typecheck":
+        check_program(model)
 
     elif op == "codegen":
         pass

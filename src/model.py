@@ -8,6 +8,23 @@ class Char:
     def __str__(self):
         return self.value
 
+class Unit:
+    def __init__(self):
+        self.value = "()"
+
+    def __repr__(self):
+        return f'Unit()'
+
+class Boolean:
+    def __init__(self, value):
+        self.value = value
+
+    def __repr__(self):
+        return f'Boolean({self.value})'
+
+    def __str__(self):
+        return self.value
+    
 class Type:
 
     def __init__(self, value):
@@ -53,6 +70,15 @@ class Float:
 
     def __repr__(self):
         return f'Float({self.value})'
+
+class UnaryOp:
+
+    def __init__(self, op, expr):
+        self.op = op
+        self.expr = expr
+
+    def __repr__(self):
+        return f'UnaryOp({self.op}, {self.expr})'
 
 class BinOp:
     '''
@@ -106,12 +132,13 @@ class Statement:
 
 class ConstDef:
 
-    def __init__(self, name, expr):
+    def __init__(self, name, type=None, expr=None):
         self.name = name
+        self.type = type
         self.expr = expr
 
     def __repr__(self):
-        return f'ConstDef({self.name}, {self.expr})'
+        return f'ConstDef({self.name}, {self.type}, {self.expr})'
 
 class VarDef:
     
@@ -199,6 +226,10 @@ def to_source(node):
         return str(node.value)
     elif isinstance(node, Float):
         return repr(node.value)
+    elif isinstance(node, Unit):
+        return f'()'
+    elif isinstance(node, Boolean):
+        return repr(node.value)
     elif isinstance(node, Name):
         return str(node.value)
     elif isinstance(node, Statement):
@@ -207,6 +238,8 @@ def to_source(node):
         return f'{to_source_list(node.expr)}' 
     elif isinstance(node, Type):
         return str(node.value)
+    elif isinstance(node, UnaryOp):
+        return "" + node.op + to_source(node.expr)
     elif isinstance(node, BinOp):
         return f'{to_source(node.left)} {node.op} {to_source(node.right)}'
     elif isinstance(node, PrintStmt):
