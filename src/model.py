@@ -241,13 +241,17 @@ def to_source_neo(node_list):
 def to_source_singleline(node_list):
     ret_str = ""
     for node in node_list:
-        ret_str += f' {to_source(node)} ' 
+        ret_str += f' {to_source(node)}' 
+
+    ret_str += f' '
 
     return ret_str
 
 def to_source(node):
 
-    if isinstance(node, Integer):
+    if isinstance(node, list):
+        return f'{to_source_list(node)}'
+    elif isinstance(node, Integer):
         return str(node.value)
     elif isinstance(node, Float):
         return repr(node.value)
@@ -260,7 +264,7 @@ def to_source(node):
     elif isinstance(node, Statement):
         return f'{to_source(node.expr)};'
     elif isinstance(node, CompoundStmt):
-        return f'{to_source_list(node.expr)}' 
+        return f'{{{to_source_singleline(node.expr)}}}' 
     elif isinstance(node, Type):
         return str(node.value)
     elif isinstance(node, UnaryOp):
@@ -282,15 +286,15 @@ def to_source(node):
         return f'{to_source(node.location)} = {to_source(node.expr)};'
     elif isinstance(node, IfStmt):
         if node.else_stmt is None:
-            return f'''if {to_source(node.cond)} {{\n{to_source_list(node.stmtlist)}}}'''
+            return f'''if {to_source(node.cond)} {{\n{to_source_neo(node.stmtlist)}}}'''
         else:
-            return f'if {to_source(node.cond)} {{\n{to_source_list(node.stmtlist)}}} {to_source(node.else_stmt)}'
+            return f'if {to_source(node.cond)} {{\n{to_source_neo(node.stmtlist)}}} {to_source(node.else_stmt)}'
 
     elif isinstance(node, ElseStmt):
-        return f'else {{\n{to_source_list(node.stmtlist)}}}'
+        return f'else {{\n{to_source_neo(node.stmtlist)}}}'
     elif isinstance(node, WhileStmt):
         
-        return f'''while {to_source(node.cond)} {{\n{to_source_neo(node.stmtlist.expr)}}}'''
+        return f'''while {to_source(node.cond)} {{\n{to_source_neo(node.stmtlist)}}}'''
     elif isinstance(node, ContinueStmt):
         return f'continue;'
     elif isinstance(node, BreakStmt):
