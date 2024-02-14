@@ -18,11 +18,13 @@ def main():
 
     file = open(file)
     text = file.read()
-#    model = parse_source(text)
+    model = parse_source(text)
 
     if op == "model":
         print(model)
 
+    elif op == "to_source":
+        print(to_source(model))
     elif op == "interp":
         interpret_program(model)
 

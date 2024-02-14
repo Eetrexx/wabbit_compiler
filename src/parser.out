@@ -1,0 +1,3404 @@
+Grammar:
+
+Rule 0     S' -> statements
+Rule 1     statements -> _1_statement_repeat
+Rule 2     _1_statement_repeat -> _1_statement_items
+Rule 3     _1_statement_repeat -> <empty>
+Rule 4     _1_statement_items -> _1_statement_items _1_statement_item
+Rule 5     _1_statement_items -> _1_statement_item
+Rule 6     _1_statement_item -> statement
+Rule 7     statement -> expr SEMI
+Rule 8     statement -> continue_statement
+Rule 9     statement -> break_statement
+Rule 10    statement -> while_statement
+Rule 11    statement -> if_statement
+Rule 12    statement -> const_definition
+Rule 13    statement -> variable_definition
+Rule 14    statement -> assignment_statement
+Rule 15    statement -> print_statement
+Rule 16    while_statement -> WHILE expr LBRACE statements RBRACE
+Rule 17    continue_statement -> CONTINUE SEMI
+Rule 18    break_statement -> BREAK SEMI
+Rule 19    print_statement -> PRINT expr SEMI
+Rule 20    assignment_statement -> location ASSIGN expr SEMI
+Rule 21    variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI
+Rule 22    _2_ASSIGN_expr_optional -> ASSIGN expr
+Rule 23    _2_ASSIGN_expr_optional -> <empty>
+Rule 24    variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI
+Rule 25    _3_type_optional -> type
+Rule 26    _3_type_optional -> <empty>
+Rule 27    const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI
+Rule 28    _4_type_optional -> type
+Rule 29    _4_type_optional -> <empty>
+Rule 30    if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional
+Rule 31    _5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE
+Rule 32    _5_ELSE_LBRACE_statements_RBRACE_optional -> <empty>
+Rule 33    expr -> LBRACE statements RBRACE
+Rule 34    expr -> literal
+Rule 35    expr -> location
+Rule 36    expr -> LPAREN expr RPAREN
+Rule 37    expr -> LNOT expr  [precedence=right, level=6]
+Rule 38    expr -> MINUS expr  [precedence=right, level=6]
+Rule 39    expr -> PLUS expr  [precedence=right, level=6]
+Rule 40    expr -> expr LOR expr  [precedence=left, level=1]
+Rule 41    expr -> expr LAND expr  [precedence=left, level=2]
+Rule 42    expr -> expr NE expr  [precedence=nonassoc, level=3]
+Rule 43    expr -> expr EQ expr  [precedence=nonassoc, level=3]
+Rule 44    expr -> expr GE expr  [precedence=nonassoc, level=3]
+Rule 45    expr -> expr GT expr  [precedence=nonassoc, level=3]
+Rule 46    expr -> expr LE expr  [precedence=nonassoc, level=3]
+Rule 47    expr -> expr LT expr  [precedence=nonassoc, level=3]
+Rule 48    expr -> expr DIVIDE expr  [precedence=left, level=5]
+Rule 49    expr -> expr TIMES expr  [precedence=left, level=5]
+Rule 50    expr -> expr MINUS expr  [precedence=left, level=4]
+Rule 51    expr -> expr PLUS expr  [precedence=left, level=4]
+Rule 52    location -> NAME
+Rule 53    type -> NAME
+Rule 54    literal -> FALSE
+Rule 55    literal -> TRUE
+Rule 56    literal -> LPAREN RPAREN
+Rule 57    literal -> CHAR
+Rule 58    literal -> FLOAT
+Rule 59    literal -> INTEGER
+
+Terminals, with rules where they appear:
+
+ASSIGN               : 20 22 24 27
+BREAK                : 18
+CHAR                 : 57
+CONST                : 27
+CONTINUE             : 17
+DIVIDE               : 48
+ELSE                 : 31
+EQ                   : 43
+FALSE                : 54
+FLOAT                : 58
+GE                   : 44
+GT                   : 45
+IF                   : 30
+INTEGER              : 59
+LAND                 : 41
+LBRACE               : 16 30 31 33
+LE                   : 46
+LNOT                 : 37
+LOR                  : 40
+LPAREN               : 36 56
+LT                   : 47
+MINUS                : 38 50
+NAME                 : 21 24 27 52 53
+NE                   : 42
+PLUS                 : 39 51
+PRINT                : 19
+RBRACE               : 16 30 31 33
+RPAREN               : 36 56
+SEMI                 : 7 17 18 19 20 21 24 27
+TIMES                : 49
+TRUE                 : 55
+VAR                  : 21 24
+WHILE                : 16
+error                : 
+
+Nonterminals, with rules where they appear:
+
+_1_statement_item    : 4 5
+_1_statement_items   : 2 4
+_1_statement_repeat  : 1
+_2_ASSIGN_expr_optional : 21
+_3_type_optional     : 24
+_4_type_optional     : 27
+_5_ELSE_LBRACE_statements_RBRACE_optional : 30
+assignment_statement : 14
+break_statement      : 9
+const_definition     : 12
+continue_statement   : 8
+expr                 : 7 16 19 20 22 24 27 30 36 37 38 39 40 40 41 41 42 42 43 43 44 44 45 45 46 46 47 47 48 48 49 49 50 50 51 51
+if_statement         : 11
+literal              : 34
+location             : 20 35
+print_statement      : 15
+statement            : 6
+statements           : 16 30 31 33 0
+type                 : 21 25 28
+variable_definition  : 13
+while_statement      : 10
+
+
+state 0
+
+    (0) S' -> . statements
+    (1) statements -> . _1_statement_repeat
+    (2) _1_statement_repeat -> . _1_statement_items
+    (3) _1_statement_repeat -> .
+    (4) _1_statement_items -> . _1_statement_items _1_statement_item
+    (5) _1_statement_items -> . _1_statement_item
+    (6) _1_statement_item -> . statement
+    (7) statement -> . expr SEMI
+    (8) statement -> . continue_statement
+    (9) statement -> . break_statement
+    (10) statement -> . while_statement
+    (11) statement -> . if_statement
+    (12) statement -> . const_definition
+    (13) statement -> . variable_definition
+    (14) statement -> . assignment_statement
+    (15) statement -> . print_statement
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (17) continue_statement -> . CONTINUE SEMI
+    (18) break_statement -> . BREAK SEMI
+    (16) while_statement -> . WHILE expr LBRACE statements RBRACE
+    (30) if_statement -> . IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional
+    (27) const_definition -> . CONST NAME _4_type_optional ASSIGN expr SEMI
+    (21) variable_definition -> . VAR NAME type _2_ASSIGN_expr_optional SEMI
+    (24) variable_definition -> . VAR NAME _3_type_optional ASSIGN expr SEMI
+    (20) assignment_statement -> . location ASSIGN expr SEMI
+    (19) print_statement -> . PRINT expr SEMI
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    $end            reduce using rule 3 (_1_statement_repeat -> .)
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    CONTINUE        shift and go to state 22
+    BREAK           shift and go to state 23
+    WHILE           shift and go to state 24
+    IF              shift and go to state 25
+    CONST           shift and go to state 26
+    VAR             shift and go to state 28
+    PRINT           shift and go to state 29
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    statements                     shift and go to state 1
+    _1_statement_repeat            shift and go to state 2
+    _1_statement_items             shift and go to state 3
+    _1_statement_item              shift and go to state 4
+    statement                      shift and go to state 5
+    expr                           shift and go to state 6
+    continue_statement             shift and go to state 7
+    break_statement                shift and go to state 8
+    while_statement                shift and go to state 9
+    if_statement                   shift and go to state 10
+    const_definition               shift and go to state 11
+    variable_definition            shift and go to state 12
+    assignment_statement           shift and go to state 13
+    print_statement                shift and go to state 14
+    literal                        shift and go to state 16
+    location                       shift and go to state 17
+
+state 1
+
+    (0) S' -> statements .
+
+
+state 2
+
+    (1) statements -> _1_statement_repeat .
+    $end            reduce using rule 1 (statements -> _1_statement_repeat .)
+    RBRACE          reduce using rule 1 (statements -> _1_statement_repeat .)
+
+
+state 3
+
+    (2) _1_statement_repeat -> _1_statement_items .
+    (4) _1_statement_items -> _1_statement_items . _1_statement_item
+    (6) _1_statement_item -> . statement
+    (7) statement -> . expr SEMI
+    (8) statement -> . continue_statement
+    (9) statement -> . break_statement
+    (10) statement -> . while_statement
+    (11) statement -> . if_statement
+    (12) statement -> . const_definition
+    (13) statement -> . variable_definition
+    (14) statement -> . assignment_statement
+    (15) statement -> . print_statement
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (17) continue_statement -> . CONTINUE SEMI
+    (18) break_statement -> . BREAK SEMI
+    (16) while_statement -> . WHILE expr LBRACE statements RBRACE
+    (30) if_statement -> . IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional
+    (27) const_definition -> . CONST NAME _4_type_optional ASSIGN expr SEMI
+    (21) variable_definition -> . VAR NAME type _2_ASSIGN_expr_optional SEMI
+    (24) variable_definition -> . VAR NAME _3_type_optional ASSIGN expr SEMI
+    (20) assignment_statement -> . location ASSIGN expr SEMI
+    (19) print_statement -> . PRINT expr SEMI
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    $end            reduce using rule 2 (_1_statement_repeat -> _1_statement_items .)
+    RBRACE          reduce using rule 2 (_1_statement_repeat -> _1_statement_items .)
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    CONTINUE        shift and go to state 22
+    BREAK           shift and go to state 23
+    WHILE           shift and go to state 24
+    IF              shift and go to state 25
+    CONST           shift and go to state 26
+    VAR             shift and go to state 28
+    PRINT           shift and go to state 29
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    _1_statement_item              shift and go to state 35
+    statement                      shift and go to state 5
+    expr                           shift and go to state 6
+    continue_statement             shift and go to state 7
+    break_statement                shift and go to state 8
+    while_statement                shift and go to state 9
+    if_statement                   shift and go to state 10
+    const_definition               shift and go to state 11
+    variable_definition            shift and go to state 12
+    assignment_statement           shift and go to state 13
+    print_statement                shift and go to state 14
+    literal                        shift and go to state 16
+    location                       shift and go to state 17
+
+state 4
+
+    (5) _1_statement_items -> _1_statement_item .
+    LBRACE          reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    LPAREN          reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    LNOT            reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    MINUS           reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    PLUS            reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    CONTINUE        reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    BREAK           reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    WHILE           reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    IF              reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    CONST           reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    VAR             reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    PRINT           reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    FALSE           reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    TRUE            reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    CHAR            reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    FLOAT           reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    INTEGER         reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    NAME            reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    $end            reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+    RBRACE          reduce using rule 5 (_1_statement_items -> _1_statement_item .)
+
+
+state 5
+
+    (6) _1_statement_item -> statement .
+    LBRACE          reduce using rule 6 (_1_statement_item -> statement .)
+    LPAREN          reduce using rule 6 (_1_statement_item -> statement .)
+    LNOT            reduce using rule 6 (_1_statement_item -> statement .)
+    MINUS           reduce using rule 6 (_1_statement_item -> statement .)
+    PLUS            reduce using rule 6 (_1_statement_item -> statement .)
+    CONTINUE        reduce using rule 6 (_1_statement_item -> statement .)
+    BREAK           reduce using rule 6 (_1_statement_item -> statement .)
+    WHILE           reduce using rule 6 (_1_statement_item -> statement .)
+    IF              reduce using rule 6 (_1_statement_item -> statement .)
+    CONST           reduce using rule 6 (_1_statement_item -> statement .)
+    VAR             reduce using rule 6 (_1_statement_item -> statement .)
+    PRINT           reduce using rule 6 (_1_statement_item -> statement .)
+    FALSE           reduce using rule 6 (_1_statement_item -> statement .)
+    TRUE            reduce using rule 6 (_1_statement_item -> statement .)
+    CHAR            reduce using rule 6 (_1_statement_item -> statement .)
+    FLOAT           reduce using rule 6 (_1_statement_item -> statement .)
+    INTEGER         reduce using rule 6 (_1_statement_item -> statement .)
+    NAME            reduce using rule 6 (_1_statement_item -> statement .)
+    $end            reduce using rule 6 (_1_statement_item -> statement .)
+    RBRACE          reduce using rule 6 (_1_statement_item -> statement .)
+
+
+state 6
+
+    (7) statement -> expr . SEMI
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            shift and go to state 36
+    LOR             shift and go to state 37
+    LAND            shift and go to state 38
+    NE              shift and go to state 39
+    EQ              shift and go to state 40
+    GE              shift and go to state 41
+    GT              shift and go to state 42
+    LE              shift and go to state 43
+    LT              shift and go to state 44
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 7
+
+    (8) statement -> continue_statement .
+    LBRACE          reduce using rule 8 (statement -> continue_statement .)
+    LPAREN          reduce using rule 8 (statement -> continue_statement .)
+    LNOT            reduce using rule 8 (statement -> continue_statement .)
+    MINUS           reduce using rule 8 (statement -> continue_statement .)
+    PLUS            reduce using rule 8 (statement -> continue_statement .)
+    CONTINUE        reduce using rule 8 (statement -> continue_statement .)
+    BREAK           reduce using rule 8 (statement -> continue_statement .)
+    WHILE           reduce using rule 8 (statement -> continue_statement .)
+    IF              reduce using rule 8 (statement -> continue_statement .)
+    CONST           reduce using rule 8 (statement -> continue_statement .)
+    VAR             reduce using rule 8 (statement -> continue_statement .)
+    PRINT           reduce using rule 8 (statement -> continue_statement .)
+    FALSE           reduce using rule 8 (statement -> continue_statement .)
+    TRUE            reduce using rule 8 (statement -> continue_statement .)
+    CHAR            reduce using rule 8 (statement -> continue_statement .)
+    FLOAT           reduce using rule 8 (statement -> continue_statement .)
+    INTEGER         reduce using rule 8 (statement -> continue_statement .)
+    NAME            reduce using rule 8 (statement -> continue_statement .)
+    $end            reduce using rule 8 (statement -> continue_statement .)
+    RBRACE          reduce using rule 8 (statement -> continue_statement .)
+
+
+state 8
+
+    (9) statement -> break_statement .
+    LBRACE          reduce using rule 9 (statement -> break_statement .)
+    LPAREN          reduce using rule 9 (statement -> break_statement .)
+    LNOT            reduce using rule 9 (statement -> break_statement .)
+    MINUS           reduce using rule 9 (statement -> break_statement .)
+    PLUS            reduce using rule 9 (statement -> break_statement .)
+    CONTINUE        reduce using rule 9 (statement -> break_statement .)
+    BREAK           reduce using rule 9 (statement -> break_statement .)
+    WHILE           reduce using rule 9 (statement -> break_statement .)
+    IF              reduce using rule 9 (statement -> break_statement .)
+    CONST           reduce using rule 9 (statement -> break_statement .)
+    VAR             reduce using rule 9 (statement -> break_statement .)
+    PRINT           reduce using rule 9 (statement -> break_statement .)
+    FALSE           reduce using rule 9 (statement -> break_statement .)
+    TRUE            reduce using rule 9 (statement -> break_statement .)
+    CHAR            reduce using rule 9 (statement -> break_statement .)
+    FLOAT           reduce using rule 9 (statement -> break_statement .)
+    INTEGER         reduce using rule 9 (statement -> break_statement .)
+    NAME            reduce using rule 9 (statement -> break_statement .)
+    $end            reduce using rule 9 (statement -> break_statement .)
+    RBRACE          reduce using rule 9 (statement -> break_statement .)
+
+
+state 9
+
+    (10) statement -> while_statement .
+    LBRACE          reduce using rule 10 (statement -> while_statement .)
+    LPAREN          reduce using rule 10 (statement -> while_statement .)
+    LNOT            reduce using rule 10 (statement -> while_statement .)
+    MINUS           reduce using rule 10 (statement -> while_statement .)
+    PLUS            reduce using rule 10 (statement -> while_statement .)
+    CONTINUE        reduce using rule 10 (statement -> while_statement .)
+    BREAK           reduce using rule 10 (statement -> while_statement .)
+    WHILE           reduce using rule 10 (statement -> while_statement .)
+    IF              reduce using rule 10 (statement -> while_statement .)
+    CONST           reduce using rule 10 (statement -> while_statement .)
+    VAR             reduce using rule 10 (statement -> while_statement .)
+    PRINT           reduce using rule 10 (statement -> while_statement .)
+    FALSE           reduce using rule 10 (statement -> while_statement .)
+    TRUE            reduce using rule 10 (statement -> while_statement .)
+    CHAR            reduce using rule 10 (statement -> while_statement .)
+    FLOAT           reduce using rule 10 (statement -> while_statement .)
+    INTEGER         reduce using rule 10 (statement -> while_statement .)
+    NAME            reduce using rule 10 (statement -> while_statement .)
+    $end            reduce using rule 10 (statement -> while_statement .)
+    RBRACE          reduce using rule 10 (statement -> while_statement .)
+
+
+state 10
+
+    (11) statement -> if_statement .
+    LBRACE          reduce using rule 11 (statement -> if_statement .)
+    LPAREN          reduce using rule 11 (statement -> if_statement .)
+    LNOT            reduce using rule 11 (statement -> if_statement .)
+    MINUS           reduce using rule 11 (statement -> if_statement .)
+    PLUS            reduce using rule 11 (statement -> if_statement .)
+    CONTINUE        reduce using rule 11 (statement -> if_statement .)
+    BREAK           reduce using rule 11 (statement -> if_statement .)
+    WHILE           reduce using rule 11 (statement -> if_statement .)
+    IF              reduce using rule 11 (statement -> if_statement .)
+    CONST           reduce using rule 11 (statement -> if_statement .)
+    VAR             reduce using rule 11 (statement -> if_statement .)
+    PRINT           reduce using rule 11 (statement -> if_statement .)
+    FALSE           reduce using rule 11 (statement -> if_statement .)
+    TRUE            reduce using rule 11 (statement -> if_statement .)
+    CHAR            reduce using rule 11 (statement -> if_statement .)
+    FLOAT           reduce using rule 11 (statement -> if_statement .)
+    INTEGER         reduce using rule 11 (statement -> if_statement .)
+    NAME            reduce using rule 11 (statement -> if_statement .)
+    $end            reduce using rule 11 (statement -> if_statement .)
+    RBRACE          reduce using rule 11 (statement -> if_statement .)
+
+
+state 11
+
+    (12) statement -> const_definition .
+    LBRACE          reduce using rule 12 (statement -> const_definition .)
+    LPAREN          reduce using rule 12 (statement -> const_definition .)
+    LNOT            reduce using rule 12 (statement -> const_definition .)
+    MINUS           reduce using rule 12 (statement -> const_definition .)
+    PLUS            reduce using rule 12 (statement -> const_definition .)
+    CONTINUE        reduce using rule 12 (statement -> const_definition .)
+    BREAK           reduce using rule 12 (statement -> const_definition .)
+    WHILE           reduce using rule 12 (statement -> const_definition .)
+    IF              reduce using rule 12 (statement -> const_definition .)
+    CONST           reduce using rule 12 (statement -> const_definition .)
+    VAR             reduce using rule 12 (statement -> const_definition .)
+    PRINT           reduce using rule 12 (statement -> const_definition .)
+    FALSE           reduce using rule 12 (statement -> const_definition .)
+    TRUE            reduce using rule 12 (statement -> const_definition .)
+    CHAR            reduce using rule 12 (statement -> const_definition .)
+    FLOAT           reduce using rule 12 (statement -> const_definition .)
+    INTEGER         reduce using rule 12 (statement -> const_definition .)
+    NAME            reduce using rule 12 (statement -> const_definition .)
+    $end            reduce using rule 12 (statement -> const_definition .)
+    RBRACE          reduce using rule 12 (statement -> const_definition .)
+
+
+state 12
+
+    (13) statement -> variable_definition .
+    LBRACE          reduce using rule 13 (statement -> variable_definition .)
+    LPAREN          reduce using rule 13 (statement -> variable_definition .)
+    LNOT            reduce using rule 13 (statement -> variable_definition .)
+    MINUS           reduce using rule 13 (statement -> variable_definition .)
+    PLUS            reduce using rule 13 (statement -> variable_definition .)
+    CONTINUE        reduce using rule 13 (statement -> variable_definition .)
+    BREAK           reduce using rule 13 (statement -> variable_definition .)
+    WHILE           reduce using rule 13 (statement -> variable_definition .)
+    IF              reduce using rule 13 (statement -> variable_definition .)
+    CONST           reduce using rule 13 (statement -> variable_definition .)
+    VAR             reduce using rule 13 (statement -> variable_definition .)
+    PRINT           reduce using rule 13 (statement -> variable_definition .)
+    FALSE           reduce using rule 13 (statement -> variable_definition .)
+    TRUE            reduce using rule 13 (statement -> variable_definition .)
+    CHAR            reduce using rule 13 (statement -> variable_definition .)
+    FLOAT           reduce using rule 13 (statement -> variable_definition .)
+    INTEGER         reduce using rule 13 (statement -> variable_definition .)
+    NAME            reduce using rule 13 (statement -> variable_definition .)
+    $end            reduce using rule 13 (statement -> variable_definition .)
+    RBRACE          reduce using rule 13 (statement -> variable_definition .)
+
+
+state 13
+
+    (14) statement -> assignment_statement .
+    LBRACE          reduce using rule 14 (statement -> assignment_statement .)
+    LPAREN          reduce using rule 14 (statement -> assignment_statement .)
+    LNOT            reduce using rule 14 (statement -> assignment_statement .)
+    MINUS           reduce using rule 14 (statement -> assignment_statement .)
+    PLUS            reduce using rule 14 (statement -> assignment_statement .)
+    CONTINUE        reduce using rule 14 (statement -> assignment_statement .)
+    BREAK           reduce using rule 14 (statement -> assignment_statement .)
+    WHILE           reduce using rule 14 (statement -> assignment_statement .)
+    IF              reduce using rule 14 (statement -> assignment_statement .)
+    CONST           reduce using rule 14 (statement -> assignment_statement .)
+    VAR             reduce using rule 14 (statement -> assignment_statement .)
+    PRINT           reduce using rule 14 (statement -> assignment_statement .)
+    FALSE           reduce using rule 14 (statement -> assignment_statement .)
+    TRUE            reduce using rule 14 (statement -> assignment_statement .)
+    CHAR            reduce using rule 14 (statement -> assignment_statement .)
+    FLOAT           reduce using rule 14 (statement -> assignment_statement .)
+    INTEGER         reduce using rule 14 (statement -> assignment_statement .)
+    NAME            reduce using rule 14 (statement -> assignment_statement .)
+    $end            reduce using rule 14 (statement -> assignment_statement .)
+    RBRACE          reduce using rule 14 (statement -> assignment_statement .)
+
+
+state 14
+
+    (15) statement -> print_statement .
+    LBRACE          reduce using rule 15 (statement -> print_statement .)
+    LPAREN          reduce using rule 15 (statement -> print_statement .)
+    LNOT            reduce using rule 15 (statement -> print_statement .)
+    MINUS           reduce using rule 15 (statement -> print_statement .)
+    PLUS            reduce using rule 15 (statement -> print_statement .)
+    CONTINUE        reduce using rule 15 (statement -> print_statement .)
+    BREAK           reduce using rule 15 (statement -> print_statement .)
+    WHILE           reduce using rule 15 (statement -> print_statement .)
+    IF              reduce using rule 15 (statement -> print_statement .)
+    CONST           reduce using rule 15 (statement -> print_statement .)
+    VAR             reduce using rule 15 (statement -> print_statement .)
+    PRINT           reduce using rule 15 (statement -> print_statement .)
+    FALSE           reduce using rule 15 (statement -> print_statement .)
+    TRUE            reduce using rule 15 (statement -> print_statement .)
+    CHAR            reduce using rule 15 (statement -> print_statement .)
+    FLOAT           reduce using rule 15 (statement -> print_statement .)
+    INTEGER         reduce using rule 15 (statement -> print_statement .)
+    NAME            reduce using rule 15 (statement -> print_statement .)
+    $end            reduce using rule 15 (statement -> print_statement .)
+    RBRACE          reduce using rule 15 (statement -> print_statement .)
+
+
+state 15
+
+    (33) expr -> LBRACE . statements RBRACE
+    (1) statements -> . _1_statement_repeat
+    (2) _1_statement_repeat -> . _1_statement_items
+    (3) _1_statement_repeat -> .
+    (4) _1_statement_items -> . _1_statement_items _1_statement_item
+    (5) _1_statement_items -> . _1_statement_item
+    (6) _1_statement_item -> . statement
+    (7) statement -> . expr SEMI
+    (8) statement -> . continue_statement
+    (9) statement -> . break_statement
+    (10) statement -> . while_statement
+    (11) statement -> . if_statement
+    (12) statement -> . const_definition
+    (13) statement -> . variable_definition
+    (14) statement -> . assignment_statement
+    (15) statement -> . print_statement
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (17) continue_statement -> . CONTINUE SEMI
+    (18) break_statement -> . BREAK SEMI
+    (16) while_statement -> . WHILE expr LBRACE statements RBRACE
+    (30) if_statement -> . IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional
+    (27) const_definition -> . CONST NAME _4_type_optional ASSIGN expr SEMI
+    (21) variable_definition -> . VAR NAME type _2_ASSIGN_expr_optional SEMI
+    (24) variable_definition -> . VAR NAME _3_type_optional ASSIGN expr SEMI
+    (20) assignment_statement -> . location ASSIGN expr SEMI
+    (19) print_statement -> . PRINT expr SEMI
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    RBRACE          reduce using rule 3 (_1_statement_repeat -> .)
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    CONTINUE        shift and go to state 22
+    BREAK           shift and go to state 23
+    WHILE           shift and go to state 24
+    IF              shift and go to state 25
+    CONST           shift and go to state 26
+    VAR             shift and go to state 28
+    PRINT           shift and go to state 29
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    statements                     shift and go to state 49
+    _1_statement_repeat            shift and go to state 2
+    _1_statement_items             shift and go to state 3
+    _1_statement_item              shift and go to state 4
+    statement                      shift and go to state 5
+    expr                           shift and go to state 6
+    continue_statement             shift and go to state 7
+    break_statement                shift and go to state 8
+    while_statement                shift and go to state 9
+    if_statement                   shift and go to state 10
+    const_definition               shift and go to state 11
+    variable_definition            shift and go to state 12
+    assignment_statement           shift and go to state 13
+    print_statement                shift and go to state 14
+    literal                        shift and go to state 16
+    location                       shift and go to state 17
+
+state 16
+
+    (34) expr -> literal .
+    SEMI            reduce using rule 34 (expr -> literal .)
+    LOR             reduce using rule 34 (expr -> literal .)
+    LAND            reduce using rule 34 (expr -> literal .)
+    NE              reduce using rule 34 (expr -> literal .)
+    EQ              reduce using rule 34 (expr -> literal .)
+    GE              reduce using rule 34 (expr -> literal .)
+    GT              reduce using rule 34 (expr -> literal .)
+    LE              reduce using rule 34 (expr -> literal .)
+    LT              reduce using rule 34 (expr -> literal .)
+    DIVIDE          reduce using rule 34 (expr -> literal .)
+    TIMES           reduce using rule 34 (expr -> literal .)
+    MINUS           reduce using rule 34 (expr -> literal .)
+    PLUS            reduce using rule 34 (expr -> literal .)
+    RPAREN          reduce using rule 34 (expr -> literal .)
+    LBRACE          reduce using rule 34 (expr -> literal .)
+
+
+state 17
+
+    (35) expr -> location .
+    (20) assignment_statement -> location . ASSIGN expr SEMI
+    SEMI            reduce using rule 35 (expr -> location .)
+    LOR             reduce using rule 35 (expr -> location .)
+    LAND            reduce using rule 35 (expr -> location .)
+    NE              reduce using rule 35 (expr -> location .)
+    EQ              reduce using rule 35 (expr -> location .)
+    GE              reduce using rule 35 (expr -> location .)
+    GT              reduce using rule 35 (expr -> location .)
+    LE              reduce using rule 35 (expr -> location .)
+    LT              reduce using rule 35 (expr -> location .)
+    DIVIDE          reduce using rule 35 (expr -> location .)
+    TIMES           reduce using rule 35 (expr -> location .)
+    MINUS           reduce using rule 35 (expr -> location .)
+    PLUS            reduce using rule 35 (expr -> location .)
+    ASSIGN          shift and go to state 50
+
+
+state 18
+
+    (36) expr -> LPAREN . expr RPAREN
+    (56) literal -> LPAREN . RPAREN
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    RPAREN          shift and go to state 52
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 51
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 19
+
+    (37) expr -> LNOT . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 54
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 20
+
+    (38) expr -> MINUS . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 55
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 21
+
+    (39) expr -> PLUS . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 56
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 22
+
+    (17) continue_statement -> CONTINUE . SEMI
+    SEMI            shift and go to state 57
+
+
+state 23
+
+    (18) break_statement -> BREAK . SEMI
+    SEMI            shift and go to state 58
+
+
+state 24
+
+    (16) while_statement -> WHILE . expr LBRACE statements RBRACE
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 59
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 25
+
+    (30) if_statement -> IF . expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 60
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 26
+
+    (27) const_definition -> CONST . NAME _4_type_optional ASSIGN expr SEMI
+    NAME            shift and go to state 61
+
+
+state 27
+
+    (52) location -> NAME .
+    ASSIGN          reduce using rule 52 (location -> NAME .)
+    SEMI            reduce using rule 52 (location -> NAME .)
+    LOR             reduce using rule 52 (location -> NAME .)
+    LAND            reduce using rule 52 (location -> NAME .)
+    NE              reduce using rule 52 (location -> NAME .)
+    EQ              reduce using rule 52 (location -> NAME .)
+    GE              reduce using rule 52 (location -> NAME .)
+    GT              reduce using rule 52 (location -> NAME .)
+    LE              reduce using rule 52 (location -> NAME .)
+    LT              reduce using rule 52 (location -> NAME .)
+    DIVIDE          reduce using rule 52 (location -> NAME .)
+    TIMES           reduce using rule 52 (location -> NAME .)
+    MINUS           reduce using rule 52 (location -> NAME .)
+    PLUS            reduce using rule 52 (location -> NAME .)
+    RPAREN          reduce using rule 52 (location -> NAME .)
+    LBRACE          reduce using rule 52 (location -> NAME .)
+
+
+state 28
+
+    (21) variable_definition -> VAR . NAME type _2_ASSIGN_expr_optional SEMI
+    (24) variable_definition -> VAR . NAME _3_type_optional ASSIGN expr SEMI
+    NAME            shift and go to state 62
+
+
+state 29
+
+    (19) print_statement -> PRINT . expr SEMI
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 63
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 30
+
+    (54) literal -> FALSE .
+    SEMI            reduce using rule 54 (literal -> FALSE .)
+    LOR             reduce using rule 54 (literal -> FALSE .)
+    LAND            reduce using rule 54 (literal -> FALSE .)
+    NE              reduce using rule 54 (literal -> FALSE .)
+    EQ              reduce using rule 54 (literal -> FALSE .)
+    GE              reduce using rule 54 (literal -> FALSE .)
+    GT              reduce using rule 54 (literal -> FALSE .)
+    LE              reduce using rule 54 (literal -> FALSE .)
+    LT              reduce using rule 54 (literal -> FALSE .)
+    DIVIDE          reduce using rule 54 (literal -> FALSE .)
+    TIMES           reduce using rule 54 (literal -> FALSE .)
+    MINUS           reduce using rule 54 (literal -> FALSE .)
+    PLUS            reduce using rule 54 (literal -> FALSE .)
+    RPAREN          reduce using rule 54 (literal -> FALSE .)
+    LBRACE          reduce using rule 54 (literal -> FALSE .)
+
+
+state 31
+
+    (55) literal -> TRUE .
+    SEMI            reduce using rule 55 (literal -> TRUE .)
+    LOR             reduce using rule 55 (literal -> TRUE .)
+    LAND            reduce using rule 55 (literal -> TRUE .)
+    NE              reduce using rule 55 (literal -> TRUE .)
+    EQ              reduce using rule 55 (literal -> TRUE .)
+    GE              reduce using rule 55 (literal -> TRUE .)
+    GT              reduce using rule 55 (literal -> TRUE .)
+    LE              reduce using rule 55 (literal -> TRUE .)
+    LT              reduce using rule 55 (literal -> TRUE .)
+    DIVIDE          reduce using rule 55 (literal -> TRUE .)
+    TIMES           reduce using rule 55 (literal -> TRUE .)
+    MINUS           reduce using rule 55 (literal -> TRUE .)
+    PLUS            reduce using rule 55 (literal -> TRUE .)
+    RPAREN          reduce using rule 55 (literal -> TRUE .)
+    LBRACE          reduce using rule 55 (literal -> TRUE .)
+
+
+state 32
+
+    (57) literal -> CHAR .
+    SEMI            reduce using rule 57 (literal -> CHAR .)
+    LOR             reduce using rule 57 (literal -> CHAR .)
+    LAND            reduce using rule 57 (literal -> CHAR .)
+    NE              reduce using rule 57 (literal -> CHAR .)
+    EQ              reduce using rule 57 (literal -> CHAR .)
+    GE              reduce using rule 57 (literal -> CHAR .)
+    GT              reduce using rule 57 (literal -> CHAR .)
+    LE              reduce using rule 57 (literal -> CHAR .)
+    LT              reduce using rule 57 (literal -> CHAR .)
+    DIVIDE          reduce using rule 57 (literal -> CHAR .)
+    TIMES           reduce using rule 57 (literal -> CHAR .)
+    MINUS           reduce using rule 57 (literal -> CHAR .)
+    PLUS            reduce using rule 57 (literal -> CHAR .)
+    RPAREN          reduce using rule 57 (literal -> CHAR .)
+    LBRACE          reduce using rule 57 (literal -> CHAR .)
+
+
+state 33
+
+    (58) literal -> FLOAT .
+    SEMI            reduce using rule 58 (literal -> FLOAT .)
+    LOR             reduce using rule 58 (literal -> FLOAT .)
+    LAND            reduce using rule 58 (literal -> FLOAT .)
+    NE              reduce using rule 58 (literal -> FLOAT .)
+    EQ              reduce using rule 58 (literal -> FLOAT .)
+    GE              reduce using rule 58 (literal -> FLOAT .)
+    GT              reduce using rule 58 (literal -> FLOAT .)
+    LE              reduce using rule 58 (literal -> FLOAT .)
+    LT              reduce using rule 58 (literal -> FLOAT .)
+    DIVIDE          reduce using rule 58 (literal -> FLOAT .)
+    TIMES           reduce using rule 58 (literal -> FLOAT .)
+    MINUS           reduce using rule 58 (literal -> FLOAT .)
+    PLUS            reduce using rule 58 (literal -> FLOAT .)
+    RPAREN          reduce using rule 58 (literal -> FLOAT .)
+    LBRACE          reduce using rule 58 (literal -> FLOAT .)
+
+
+state 34
+
+    (59) literal -> INTEGER .
+    SEMI            reduce using rule 59 (literal -> INTEGER .)
+    LOR             reduce using rule 59 (literal -> INTEGER .)
+    LAND            reduce using rule 59 (literal -> INTEGER .)
+    NE              reduce using rule 59 (literal -> INTEGER .)
+    EQ              reduce using rule 59 (literal -> INTEGER .)
+    GE              reduce using rule 59 (literal -> INTEGER .)
+    GT              reduce using rule 59 (literal -> INTEGER .)
+    LE              reduce using rule 59 (literal -> INTEGER .)
+    LT              reduce using rule 59 (literal -> INTEGER .)
+    DIVIDE          reduce using rule 59 (literal -> INTEGER .)
+    TIMES           reduce using rule 59 (literal -> INTEGER .)
+    MINUS           reduce using rule 59 (literal -> INTEGER .)
+    PLUS            reduce using rule 59 (literal -> INTEGER .)
+    RPAREN          reduce using rule 59 (literal -> INTEGER .)
+    LBRACE          reduce using rule 59 (literal -> INTEGER .)
+
+
+state 35
+
+    (4) _1_statement_items -> _1_statement_items _1_statement_item .
+    LBRACE          reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    LPAREN          reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    LNOT            reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    MINUS           reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    PLUS            reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    CONTINUE        reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    BREAK           reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    WHILE           reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    IF              reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    CONST           reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    VAR             reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    PRINT           reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    FALSE           reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    TRUE            reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    CHAR            reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    FLOAT           reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    INTEGER         reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    NAME            reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    $end            reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    RBRACE          reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+
+
+state 36
+
+    (7) statement -> expr SEMI .
+    LBRACE          reduce using rule 7 (statement -> expr SEMI .)
+    LPAREN          reduce using rule 7 (statement -> expr SEMI .)
+    LNOT            reduce using rule 7 (statement -> expr SEMI .)
+    MINUS           reduce using rule 7 (statement -> expr SEMI .)
+    PLUS            reduce using rule 7 (statement -> expr SEMI .)
+    CONTINUE        reduce using rule 7 (statement -> expr SEMI .)
+    BREAK           reduce using rule 7 (statement -> expr SEMI .)
+    WHILE           reduce using rule 7 (statement -> expr SEMI .)
+    IF              reduce using rule 7 (statement -> expr SEMI .)
+    CONST           reduce using rule 7 (statement -> expr SEMI .)
+    VAR             reduce using rule 7 (statement -> expr SEMI .)
+    PRINT           reduce using rule 7 (statement -> expr SEMI .)
+    FALSE           reduce using rule 7 (statement -> expr SEMI .)
+    TRUE            reduce using rule 7 (statement -> expr SEMI .)
+    CHAR            reduce using rule 7 (statement -> expr SEMI .)
+    FLOAT           reduce using rule 7 (statement -> expr SEMI .)
+    INTEGER         reduce using rule 7 (statement -> expr SEMI .)
+    NAME            reduce using rule 7 (statement -> expr SEMI .)
+    $end            reduce using rule 7 (statement -> expr SEMI .)
+    RBRACE          reduce using rule 7 (statement -> expr SEMI .)
+
+
+state 37
+
+    (40) expr -> expr LOR . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 64
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 38
+
+    (41) expr -> expr LAND . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 65
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 39
+
+    (42) expr -> expr NE . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 66
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 40
+
+    (43) expr -> expr EQ . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 67
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 41
+
+    (44) expr -> expr GE . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 68
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 42
+
+    (45) expr -> expr GT . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 69
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 43
+
+    (46) expr -> expr LE . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 70
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 44
+
+    (47) expr -> expr LT . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 71
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 45
+
+    (48) expr -> expr DIVIDE . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 72
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 46
+
+    (49) expr -> expr TIMES . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 73
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 47
+
+    (50) expr -> expr MINUS . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 74
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 48
+
+    (51) expr -> expr PLUS . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 75
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 49
+
+    (33) expr -> LBRACE statements . RBRACE
+    RBRACE          shift and go to state 76
+
+
+state 50
+
+    (20) assignment_statement -> location ASSIGN . expr SEMI
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    location                       shift and go to state 53
+    expr                           shift and go to state 77
+    literal                        shift and go to state 16
+
+state 51
+
+    (36) expr -> LPAREN expr . RPAREN
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    RPAREN          shift and go to state 78
+    LOR             shift and go to state 37
+    LAND            shift and go to state 38
+    NE              shift and go to state 39
+    EQ              shift and go to state 40
+    GE              shift and go to state 41
+    GT              shift and go to state 42
+    LE              shift and go to state 43
+    LT              shift and go to state 44
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 52
+
+    (56) literal -> LPAREN RPAREN .
+    SEMI            reduce using rule 56 (literal -> LPAREN RPAREN .)
+    LOR             reduce using rule 56 (literal -> LPAREN RPAREN .)
+    LAND            reduce using rule 56 (literal -> LPAREN RPAREN .)
+    NE              reduce using rule 56 (literal -> LPAREN RPAREN .)
+    EQ              reduce using rule 56 (literal -> LPAREN RPAREN .)
+    GE              reduce using rule 56 (literal -> LPAREN RPAREN .)
+    GT              reduce using rule 56 (literal -> LPAREN RPAREN .)
+    LE              reduce using rule 56 (literal -> LPAREN RPAREN .)
+    LT              reduce using rule 56 (literal -> LPAREN RPAREN .)
+    DIVIDE          reduce using rule 56 (literal -> LPAREN RPAREN .)
+    TIMES           reduce using rule 56 (literal -> LPAREN RPAREN .)
+    MINUS           reduce using rule 56 (literal -> LPAREN RPAREN .)
+    PLUS            reduce using rule 56 (literal -> LPAREN RPAREN .)
+    RPAREN          reduce using rule 56 (literal -> LPAREN RPAREN .)
+    LBRACE          reduce using rule 56 (literal -> LPAREN RPAREN .)
+
+
+state 53
+
+    (35) expr -> location .
+    RPAREN          reduce using rule 35 (expr -> location .)
+    LOR             reduce using rule 35 (expr -> location .)
+    LAND            reduce using rule 35 (expr -> location .)
+    NE              reduce using rule 35 (expr -> location .)
+    EQ              reduce using rule 35 (expr -> location .)
+    GE              reduce using rule 35 (expr -> location .)
+    GT              reduce using rule 35 (expr -> location .)
+    LE              reduce using rule 35 (expr -> location .)
+    LT              reduce using rule 35 (expr -> location .)
+    DIVIDE          reduce using rule 35 (expr -> location .)
+    TIMES           reduce using rule 35 (expr -> location .)
+    MINUS           reduce using rule 35 (expr -> location .)
+    PLUS            reduce using rule 35 (expr -> location .)
+    SEMI            reduce using rule 35 (expr -> location .)
+    LBRACE          reduce using rule 35 (expr -> location .)
+
+
+state 54
+
+    (37) expr -> LNOT expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 37 (expr -> LNOT expr .)
+    LOR             reduce using rule 37 (expr -> LNOT expr .)
+    LAND            reduce using rule 37 (expr -> LNOT expr .)
+    NE              reduce using rule 37 (expr -> LNOT expr .)
+    EQ              reduce using rule 37 (expr -> LNOT expr .)
+    GE              reduce using rule 37 (expr -> LNOT expr .)
+    GT              reduce using rule 37 (expr -> LNOT expr .)
+    LE              reduce using rule 37 (expr -> LNOT expr .)
+    LT              reduce using rule 37 (expr -> LNOT expr .)
+    DIVIDE          reduce using rule 37 (expr -> LNOT expr .)
+    TIMES           reduce using rule 37 (expr -> LNOT expr .)
+    MINUS           reduce using rule 37 (expr -> LNOT expr .)
+    PLUS            reduce using rule 37 (expr -> LNOT expr .)
+    RPAREN          reduce using rule 37 (expr -> LNOT expr .)
+    LBRACE          reduce using rule 37 (expr -> LNOT expr .)
+
+
+state 55
+
+    (38) expr -> MINUS expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 38 (expr -> MINUS expr .)
+    LOR             reduce using rule 38 (expr -> MINUS expr .)
+    LAND            reduce using rule 38 (expr -> MINUS expr .)
+    NE              reduce using rule 38 (expr -> MINUS expr .)
+    EQ              reduce using rule 38 (expr -> MINUS expr .)
+    GE              reduce using rule 38 (expr -> MINUS expr .)
+    GT              reduce using rule 38 (expr -> MINUS expr .)
+    LE              reduce using rule 38 (expr -> MINUS expr .)
+    LT              reduce using rule 38 (expr -> MINUS expr .)
+    DIVIDE          reduce using rule 38 (expr -> MINUS expr .)
+    TIMES           reduce using rule 38 (expr -> MINUS expr .)
+    MINUS           reduce using rule 38 (expr -> MINUS expr .)
+    PLUS            reduce using rule 38 (expr -> MINUS expr .)
+    RPAREN          reduce using rule 38 (expr -> MINUS expr .)
+    LBRACE          reduce using rule 38 (expr -> MINUS expr .)
+
+
+state 56
+
+    (39) expr -> PLUS expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 39 (expr -> PLUS expr .)
+    LOR             reduce using rule 39 (expr -> PLUS expr .)
+    LAND            reduce using rule 39 (expr -> PLUS expr .)
+    NE              reduce using rule 39 (expr -> PLUS expr .)
+    EQ              reduce using rule 39 (expr -> PLUS expr .)
+    GE              reduce using rule 39 (expr -> PLUS expr .)
+    GT              reduce using rule 39 (expr -> PLUS expr .)
+    LE              reduce using rule 39 (expr -> PLUS expr .)
+    LT              reduce using rule 39 (expr -> PLUS expr .)
+    DIVIDE          reduce using rule 39 (expr -> PLUS expr .)
+    TIMES           reduce using rule 39 (expr -> PLUS expr .)
+    MINUS           reduce using rule 39 (expr -> PLUS expr .)
+    PLUS            reduce using rule 39 (expr -> PLUS expr .)
+    RPAREN          reduce using rule 39 (expr -> PLUS expr .)
+    LBRACE          reduce using rule 39 (expr -> PLUS expr .)
+
+
+state 57
+
+    (17) continue_statement -> CONTINUE SEMI .
+    LBRACE          reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    LPAREN          reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    LNOT            reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    MINUS           reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    PLUS            reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    CONTINUE        reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    BREAK           reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    WHILE           reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    IF              reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    CONST           reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    VAR             reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    PRINT           reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    FALSE           reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    TRUE            reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    CHAR            reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    FLOAT           reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    INTEGER         reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    NAME            reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    $end            reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+    RBRACE          reduce using rule 17 (continue_statement -> CONTINUE SEMI .)
+
+
+state 58
+
+    (18) break_statement -> BREAK SEMI .
+    LBRACE          reduce using rule 18 (break_statement -> BREAK SEMI .)
+    LPAREN          reduce using rule 18 (break_statement -> BREAK SEMI .)
+    LNOT            reduce using rule 18 (break_statement -> BREAK SEMI .)
+    MINUS           reduce using rule 18 (break_statement -> BREAK SEMI .)
+    PLUS            reduce using rule 18 (break_statement -> BREAK SEMI .)
+    CONTINUE        reduce using rule 18 (break_statement -> BREAK SEMI .)
+    BREAK           reduce using rule 18 (break_statement -> BREAK SEMI .)
+    WHILE           reduce using rule 18 (break_statement -> BREAK SEMI .)
+    IF              reduce using rule 18 (break_statement -> BREAK SEMI .)
+    CONST           reduce using rule 18 (break_statement -> BREAK SEMI .)
+    VAR             reduce using rule 18 (break_statement -> BREAK SEMI .)
+    PRINT           reduce using rule 18 (break_statement -> BREAK SEMI .)
+    FALSE           reduce using rule 18 (break_statement -> BREAK SEMI .)
+    TRUE            reduce using rule 18 (break_statement -> BREAK SEMI .)
+    CHAR            reduce using rule 18 (break_statement -> BREAK SEMI .)
+    FLOAT           reduce using rule 18 (break_statement -> BREAK SEMI .)
+    INTEGER         reduce using rule 18 (break_statement -> BREAK SEMI .)
+    NAME            reduce using rule 18 (break_statement -> BREAK SEMI .)
+    $end            reduce using rule 18 (break_statement -> BREAK SEMI .)
+    RBRACE          reduce using rule 18 (break_statement -> BREAK SEMI .)
+
+
+state 59
+
+    (16) while_statement -> WHILE expr . LBRACE statements RBRACE
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    LBRACE          shift and go to state 79
+    LOR             shift and go to state 37
+    LAND            shift and go to state 38
+    NE              shift and go to state 39
+    EQ              shift and go to state 40
+    GE              shift and go to state 41
+    GT              shift and go to state 42
+    LE              shift and go to state 43
+    LT              shift and go to state 44
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 60
+
+    (30) if_statement -> IF expr . LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    LBRACE          shift and go to state 80
+    LOR             shift and go to state 37
+    LAND            shift and go to state 38
+    NE              shift and go to state 39
+    EQ              shift and go to state 40
+    GE              shift and go to state 41
+    GT              shift and go to state 42
+    LE              shift and go to state 43
+    LT              shift and go to state 44
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 61
+
+    (27) const_definition -> CONST NAME . _4_type_optional ASSIGN expr SEMI
+    (28) _4_type_optional -> . type
+    (29) _4_type_optional -> .
+    (53) type -> . NAME
+    ASSIGN          reduce using rule 29 (_4_type_optional -> .)
+    NAME            shift and go to state 81
+
+    _4_type_optional               shift and go to state 82
+    type                           shift and go to state 83
+
+state 62
+
+    (21) variable_definition -> VAR NAME . type _2_ASSIGN_expr_optional SEMI
+    (24) variable_definition -> VAR NAME . _3_type_optional ASSIGN expr SEMI
+    (53) type -> . NAME
+    (25) _3_type_optional -> . type
+    (26) _3_type_optional -> .
+    NAME            shift and go to state 81
+    ASSIGN          reduce using rule 26 (_3_type_optional -> .)
+
+    type                           shift and go to state 84
+    _3_type_optional               shift and go to state 85
+
+state 63
+
+    (19) print_statement -> PRINT expr . SEMI
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            shift and go to state 86
+    LOR             shift and go to state 37
+    LAND            shift and go to state 38
+    NE              shift and go to state 39
+    EQ              shift and go to state 40
+    GE              shift and go to state 41
+    GT              shift and go to state 42
+    LE              shift and go to state 43
+    LT              shift and go to state 44
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 64
+
+    (40) expr -> expr LOR expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 40 (expr -> expr LOR expr .)
+    LOR             reduce using rule 40 (expr -> expr LOR expr .)
+    RPAREN          reduce using rule 40 (expr -> expr LOR expr .)
+    LBRACE          reduce using rule 40 (expr -> expr LOR expr .)
+    LAND            shift and go to state 38
+    NE              shift and go to state 39
+    EQ              shift and go to state 40
+    GE              shift and go to state 41
+    GT              shift and go to state 42
+    LE              shift and go to state 43
+    LT              shift and go to state 44
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 65
+
+    (41) expr -> expr LAND expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 41 (expr -> expr LAND expr .)
+    LOR             reduce using rule 41 (expr -> expr LAND expr .)
+    LAND            reduce using rule 41 (expr -> expr LAND expr .)
+    RPAREN          reduce using rule 41 (expr -> expr LAND expr .)
+    LBRACE          reduce using rule 41 (expr -> expr LAND expr .)
+    NE              shift and go to state 39
+    EQ              shift and go to state 40
+    GE              shift and go to state 41
+    GT              shift and go to state 42
+    LE              shift and go to state 43
+    LT              shift and go to state 44
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 66
+
+    (42) expr -> expr NE expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 42 (expr -> expr NE expr .)
+    LOR             reduce using rule 42 (expr -> expr NE expr .)
+    LAND            reduce using rule 42 (expr -> expr NE expr .)
+    NE              reduce using rule 42 (expr -> expr NE expr .)
+    EQ              reduce using rule 42 (expr -> expr NE expr .)
+    GE              reduce using rule 42 (expr -> expr NE expr .)
+    GT              reduce using rule 42 (expr -> expr NE expr .)
+    LE              reduce using rule 42 (expr -> expr NE expr .)
+    LT              reduce using rule 42 (expr -> expr NE expr .)
+    RPAREN          reduce using rule 42 (expr -> expr NE expr .)
+    LBRACE          reduce using rule 42 (expr -> expr NE expr .)
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 67
+
+    (43) expr -> expr EQ expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 43 (expr -> expr EQ expr .)
+    LOR             reduce using rule 43 (expr -> expr EQ expr .)
+    LAND            reduce using rule 43 (expr -> expr EQ expr .)
+    NE              reduce using rule 43 (expr -> expr EQ expr .)
+    EQ              reduce using rule 43 (expr -> expr EQ expr .)
+    GE              reduce using rule 43 (expr -> expr EQ expr .)
+    GT              reduce using rule 43 (expr -> expr EQ expr .)
+    LE              reduce using rule 43 (expr -> expr EQ expr .)
+    LT              reduce using rule 43 (expr -> expr EQ expr .)
+    RPAREN          reduce using rule 43 (expr -> expr EQ expr .)
+    LBRACE          reduce using rule 43 (expr -> expr EQ expr .)
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 68
+
+    (44) expr -> expr GE expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 44 (expr -> expr GE expr .)
+    LOR             reduce using rule 44 (expr -> expr GE expr .)
+    LAND            reduce using rule 44 (expr -> expr GE expr .)
+    NE              reduce using rule 44 (expr -> expr GE expr .)
+    EQ              reduce using rule 44 (expr -> expr GE expr .)
+    GE              reduce using rule 44 (expr -> expr GE expr .)
+    GT              reduce using rule 44 (expr -> expr GE expr .)
+    LE              reduce using rule 44 (expr -> expr GE expr .)
+    LT              reduce using rule 44 (expr -> expr GE expr .)
+    RPAREN          reduce using rule 44 (expr -> expr GE expr .)
+    LBRACE          reduce using rule 44 (expr -> expr GE expr .)
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 69
+
+    (45) expr -> expr GT expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 45 (expr -> expr GT expr .)
+    LOR             reduce using rule 45 (expr -> expr GT expr .)
+    LAND            reduce using rule 45 (expr -> expr GT expr .)
+    NE              reduce using rule 45 (expr -> expr GT expr .)
+    EQ              reduce using rule 45 (expr -> expr GT expr .)
+    GE              reduce using rule 45 (expr -> expr GT expr .)
+    GT              reduce using rule 45 (expr -> expr GT expr .)
+    LE              reduce using rule 45 (expr -> expr GT expr .)
+    LT              reduce using rule 45 (expr -> expr GT expr .)
+    RPAREN          reduce using rule 45 (expr -> expr GT expr .)
+    LBRACE          reduce using rule 45 (expr -> expr GT expr .)
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 70
+
+    (46) expr -> expr LE expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 46 (expr -> expr LE expr .)
+    LOR             reduce using rule 46 (expr -> expr LE expr .)
+    LAND            reduce using rule 46 (expr -> expr LE expr .)
+    NE              reduce using rule 46 (expr -> expr LE expr .)
+    EQ              reduce using rule 46 (expr -> expr LE expr .)
+    GE              reduce using rule 46 (expr -> expr LE expr .)
+    GT              reduce using rule 46 (expr -> expr LE expr .)
+    LE              reduce using rule 46 (expr -> expr LE expr .)
+    LT              reduce using rule 46 (expr -> expr LE expr .)
+    RPAREN          reduce using rule 46 (expr -> expr LE expr .)
+    LBRACE          reduce using rule 46 (expr -> expr LE expr .)
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 71
+
+    (47) expr -> expr LT expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 47 (expr -> expr LT expr .)
+    LOR             reduce using rule 47 (expr -> expr LT expr .)
+    LAND            reduce using rule 47 (expr -> expr LT expr .)
+    NE              reduce using rule 47 (expr -> expr LT expr .)
+    EQ              reduce using rule 47 (expr -> expr LT expr .)
+    GE              reduce using rule 47 (expr -> expr LT expr .)
+    GT              reduce using rule 47 (expr -> expr LT expr .)
+    LE              reduce using rule 47 (expr -> expr LT expr .)
+    LT              reduce using rule 47 (expr -> expr LT expr .)
+    RPAREN          reduce using rule 47 (expr -> expr LT expr .)
+    LBRACE          reduce using rule 47 (expr -> expr LT expr .)
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 72
+
+    (48) expr -> expr DIVIDE expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 48 (expr -> expr DIVIDE expr .)
+    LOR             reduce using rule 48 (expr -> expr DIVIDE expr .)
+    LAND            reduce using rule 48 (expr -> expr DIVIDE expr .)
+    NE              reduce using rule 48 (expr -> expr DIVIDE expr .)
+    EQ              reduce using rule 48 (expr -> expr DIVIDE expr .)
+    GE              reduce using rule 48 (expr -> expr DIVIDE expr .)
+    GT              reduce using rule 48 (expr -> expr DIVIDE expr .)
+    LE              reduce using rule 48 (expr -> expr DIVIDE expr .)
+    LT              reduce using rule 48 (expr -> expr DIVIDE expr .)
+    DIVIDE          reduce using rule 48 (expr -> expr DIVIDE expr .)
+    TIMES           reduce using rule 48 (expr -> expr DIVIDE expr .)
+    MINUS           reduce using rule 48 (expr -> expr DIVIDE expr .)
+    PLUS            reduce using rule 48 (expr -> expr DIVIDE expr .)
+    RPAREN          reduce using rule 48 (expr -> expr DIVIDE expr .)
+    LBRACE          reduce using rule 48 (expr -> expr DIVIDE expr .)
+
+
+state 73
+
+    (49) expr -> expr TIMES expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 49 (expr -> expr TIMES expr .)
+    LOR             reduce using rule 49 (expr -> expr TIMES expr .)
+    LAND            reduce using rule 49 (expr -> expr TIMES expr .)
+    NE              reduce using rule 49 (expr -> expr TIMES expr .)
+    EQ              reduce using rule 49 (expr -> expr TIMES expr .)
+    GE              reduce using rule 49 (expr -> expr TIMES expr .)
+    GT              reduce using rule 49 (expr -> expr TIMES expr .)
+    LE              reduce using rule 49 (expr -> expr TIMES expr .)
+    LT              reduce using rule 49 (expr -> expr TIMES expr .)
+    DIVIDE          reduce using rule 49 (expr -> expr TIMES expr .)
+    TIMES           reduce using rule 49 (expr -> expr TIMES expr .)
+    MINUS           reduce using rule 49 (expr -> expr TIMES expr .)
+    PLUS            reduce using rule 49 (expr -> expr TIMES expr .)
+    RPAREN          reduce using rule 49 (expr -> expr TIMES expr .)
+    LBRACE          reduce using rule 49 (expr -> expr TIMES expr .)
+
+
+state 74
+
+    (50) expr -> expr MINUS expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 50 (expr -> expr MINUS expr .)
+    LOR             reduce using rule 50 (expr -> expr MINUS expr .)
+    LAND            reduce using rule 50 (expr -> expr MINUS expr .)
+    NE              reduce using rule 50 (expr -> expr MINUS expr .)
+    EQ              reduce using rule 50 (expr -> expr MINUS expr .)
+    GE              reduce using rule 50 (expr -> expr MINUS expr .)
+    GT              reduce using rule 50 (expr -> expr MINUS expr .)
+    LE              reduce using rule 50 (expr -> expr MINUS expr .)
+    LT              reduce using rule 50 (expr -> expr MINUS expr .)
+    MINUS           reduce using rule 50 (expr -> expr MINUS expr .)
+    PLUS            reduce using rule 50 (expr -> expr MINUS expr .)
+    RPAREN          reduce using rule 50 (expr -> expr MINUS expr .)
+    LBRACE          reduce using rule 50 (expr -> expr MINUS expr .)
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+
+
+state 75
+
+    (51) expr -> expr PLUS expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 51 (expr -> expr PLUS expr .)
+    LOR             reduce using rule 51 (expr -> expr PLUS expr .)
+    LAND            reduce using rule 51 (expr -> expr PLUS expr .)
+    NE              reduce using rule 51 (expr -> expr PLUS expr .)
+    EQ              reduce using rule 51 (expr -> expr PLUS expr .)
+    GE              reduce using rule 51 (expr -> expr PLUS expr .)
+    GT              reduce using rule 51 (expr -> expr PLUS expr .)
+    LE              reduce using rule 51 (expr -> expr PLUS expr .)
+    LT              reduce using rule 51 (expr -> expr PLUS expr .)
+    MINUS           reduce using rule 51 (expr -> expr PLUS expr .)
+    PLUS            reduce using rule 51 (expr -> expr PLUS expr .)
+    RPAREN          reduce using rule 51 (expr -> expr PLUS expr .)
+    LBRACE          reduce using rule 51 (expr -> expr PLUS expr .)
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+
+
+state 76
+
+    (33) expr -> LBRACE statements RBRACE .
+    SEMI            reduce using rule 33 (expr -> LBRACE statements RBRACE .)
+    LOR             reduce using rule 33 (expr -> LBRACE statements RBRACE .)
+    LAND            reduce using rule 33 (expr -> LBRACE statements RBRACE .)
+    NE              reduce using rule 33 (expr -> LBRACE statements RBRACE .)
+    EQ              reduce using rule 33 (expr -> LBRACE statements RBRACE .)
+    GE              reduce using rule 33 (expr -> LBRACE statements RBRACE .)
+    GT              reduce using rule 33 (expr -> LBRACE statements RBRACE .)
+    LE              reduce using rule 33 (expr -> LBRACE statements RBRACE .)
+    LT              reduce using rule 33 (expr -> LBRACE statements RBRACE .)
+    DIVIDE          reduce using rule 33 (expr -> LBRACE statements RBRACE .)
+    TIMES           reduce using rule 33 (expr -> LBRACE statements RBRACE .)
+    MINUS           reduce using rule 33 (expr -> LBRACE statements RBRACE .)
+    PLUS            reduce using rule 33 (expr -> LBRACE statements RBRACE .)
+    RPAREN          reduce using rule 33 (expr -> LBRACE statements RBRACE .)
+    LBRACE          reduce using rule 33 (expr -> LBRACE statements RBRACE .)
+
+
+state 77
+
+    (20) assignment_statement -> location ASSIGN expr . SEMI
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            shift and go to state 87
+    LOR             shift and go to state 37
+    LAND            shift and go to state 38
+    NE              shift and go to state 39
+    EQ              shift and go to state 40
+    GE              shift and go to state 41
+    GT              shift and go to state 42
+    LE              shift and go to state 43
+    LT              shift and go to state 44
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 78
+
+    (36) expr -> LPAREN expr RPAREN .
+    SEMI            reduce using rule 36 (expr -> LPAREN expr RPAREN .)
+    LOR             reduce using rule 36 (expr -> LPAREN expr RPAREN .)
+    LAND            reduce using rule 36 (expr -> LPAREN expr RPAREN .)
+    NE              reduce using rule 36 (expr -> LPAREN expr RPAREN .)
+    EQ              reduce using rule 36 (expr -> LPAREN expr RPAREN .)
+    GE              reduce using rule 36 (expr -> LPAREN expr RPAREN .)
+    GT              reduce using rule 36 (expr -> LPAREN expr RPAREN .)
+    LE              reduce using rule 36 (expr -> LPAREN expr RPAREN .)
+    LT              reduce using rule 36 (expr -> LPAREN expr RPAREN .)
+    DIVIDE          reduce using rule 36 (expr -> LPAREN expr RPAREN .)
+    TIMES           reduce using rule 36 (expr -> LPAREN expr RPAREN .)
+    MINUS           reduce using rule 36 (expr -> LPAREN expr RPAREN .)
+    PLUS            reduce using rule 36 (expr -> LPAREN expr RPAREN .)
+    RPAREN          reduce using rule 36 (expr -> LPAREN expr RPAREN .)
+    LBRACE          reduce using rule 36 (expr -> LPAREN expr RPAREN .)
+
+
+state 79
+
+    (16) while_statement -> WHILE expr LBRACE . statements RBRACE
+    (1) statements -> . _1_statement_repeat
+    (2) _1_statement_repeat -> . _1_statement_items
+    (3) _1_statement_repeat -> .
+    (4) _1_statement_items -> . _1_statement_items _1_statement_item
+    (5) _1_statement_items -> . _1_statement_item
+    (6) _1_statement_item -> . statement
+    (7) statement -> . expr SEMI
+    (8) statement -> . continue_statement
+    (9) statement -> . break_statement
+    (10) statement -> . while_statement
+    (11) statement -> . if_statement
+    (12) statement -> . const_definition
+    (13) statement -> . variable_definition
+    (14) statement -> . assignment_statement
+    (15) statement -> . print_statement
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (17) continue_statement -> . CONTINUE SEMI
+    (18) break_statement -> . BREAK SEMI
+    (16) while_statement -> . WHILE expr LBRACE statements RBRACE
+    (30) if_statement -> . IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional
+    (27) const_definition -> . CONST NAME _4_type_optional ASSIGN expr SEMI
+    (21) variable_definition -> . VAR NAME type _2_ASSIGN_expr_optional SEMI
+    (24) variable_definition -> . VAR NAME _3_type_optional ASSIGN expr SEMI
+    (20) assignment_statement -> . location ASSIGN expr SEMI
+    (19) print_statement -> . PRINT expr SEMI
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    RBRACE          reduce using rule 3 (_1_statement_repeat -> .)
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    CONTINUE        shift and go to state 22
+    BREAK           shift and go to state 23
+    WHILE           shift and go to state 24
+    IF              shift and go to state 25
+    CONST           shift and go to state 26
+    VAR             shift and go to state 28
+    PRINT           shift and go to state 29
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 6
+    statements                     shift and go to state 88
+    _1_statement_repeat            shift and go to state 2
+    _1_statement_items             shift and go to state 3
+    _1_statement_item              shift and go to state 4
+    statement                      shift and go to state 5
+    continue_statement             shift and go to state 7
+    break_statement                shift and go to state 8
+    while_statement                shift and go to state 9
+    if_statement                   shift and go to state 10
+    const_definition               shift and go to state 11
+    variable_definition            shift and go to state 12
+    assignment_statement           shift and go to state 13
+    print_statement                shift and go to state 14
+    literal                        shift and go to state 16
+    location                       shift and go to state 17
+
+state 80
+
+    (30) if_statement -> IF expr LBRACE . statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional
+    (1) statements -> . _1_statement_repeat
+    (2) _1_statement_repeat -> . _1_statement_items
+    (3) _1_statement_repeat -> .
+    (4) _1_statement_items -> . _1_statement_items _1_statement_item
+    (5) _1_statement_items -> . _1_statement_item
+    (6) _1_statement_item -> . statement
+    (7) statement -> . expr SEMI
+    (8) statement -> . continue_statement
+    (9) statement -> . break_statement
+    (10) statement -> . while_statement
+    (11) statement -> . if_statement
+    (12) statement -> . const_definition
+    (13) statement -> . variable_definition
+    (14) statement -> . assignment_statement
+    (15) statement -> . print_statement
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (17) continue_statement -> . CONTINUE SEMI
+    (18) break_statement -> . BREAK SEMI
+    (16) while_statement -> . WHILE expr LBRACE statements RBRACE
+    (30) if_statement -> . IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional
+    (27) const_definition -> . CONST NAME _4_type_optional ASSIGN expr SEMI
+    (21) variable_definition -> . VAR NAME type _2_ASSIGN_expr_optional SEMI
+    (24) variable_definition -> . VAR NAME _3_type_optional ASSIGN expr SEMI
+    (20) assignment_statement -> . location ASSIGN expr SEMI
+    (19) print_statement -> . PRINT expr SEMI
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    RBRACE          reduce using rule 3 (_1_statement_repeat -> .)
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    CONTINUE        shift and go to state 22
+    BREAK           shift and go to state 23
+    WHILE           shift and go to state 24
+    IF              shift and go to state 25
+    CONST           shift and go to state 26
+    VAR             shift and go to state 28
+    PRINT           shift and go to state 29
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 6
+    statements                     shift and go to state 89
+    _1_statement_repeat            shift and go to state 2
+    _1_statement_items             shift and go to state 3
+    _1_statement_item              shift and go to state 4
+    statement                      shift and go to state 5
+    continue_statement             shift and go to state 7
+    break_statement                shift and go to state 8
+    while_statement                shift and go to state 9
+    if_statement                   shift and go to state 10
+    const_definition               shift and go to state 11
+    variable_definition            shift and go to state 12
+    assignment_statement           shift and go to state 13
+    print_statement                shift and go to state 14
+    literal                        shift and go to state 16
+    location                       shift and go to state 17
+
+state 81
+
+    (53) type -> NAME .
+    ASSIGN          reduce using rule 53 (type -> NAME .)
+    SEMI            reduce using rule 53 (type -> NAME .)
+
+
+state 82
+
+    (27) const_definition -> CONST NAME _4_type_optional . ASSIGN expr SEMI
+    ASSIGN          shift and go to state 90
+
+
+state 83
+
+    (28) _4_type_optional -> type .
+    ASSIGN          reduce using rule 28 (_4_type_optional -> type .)
+
+
+state 84
+
+    (21) variable_definition -> VAR NAME type . _2_ASSIGN_expr_optional SEMI
+    (25) _3_type_optional -> type .
+    (22) _2_ASSIGN_expr_optional -> . ASSIGN expr
+    (23) _2_ASSIGN_expr_optional -> .
+  ! shift/reduce conflict for ASSIGN resolved as shift
+    ASSIGN          shift and go to state 92
+    SEMI            reduce using rule 23 (_2_ASSIGN_expr_optional -> .)
+
+    _2_ASSIGN_expr_optional        shift and go to state 91
+
+state 85
+
+    (24) variable_definition -> VAR NAME _3_type_optional . ASSIGN expr SEMI
+    ASSIGN          shift and go to state 93
+
+
+state 86
+
+    (19) print_statement -> PRINT expr SEMI .
+    LBRACE          reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    LPAREN          reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    LNOT            reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    MINUS           reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    PLUS            reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    CONTINUE        reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    BREAK           reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    WHILE           reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    IF              reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    CONST           reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    VAR             reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    PRINT           reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    FALSE           reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    TRUE            reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    CHAR            reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    FLOAT           reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    INTEGER         reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    NAME            reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    $end            reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+    RBRACE          reduce using rule 19 (print_statement -> PRINT expr SEMI .)
+
+
+state 87
+
+    (20) assignment_statement -> location ASSIGN expr SEMI .
+    LBRACE          reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    LPAREN          reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    LNOT            reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    MINUS           reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    PLUS            reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    CONTINUE        reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    BREAK           reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    WHILE           reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    IF              reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    CONST           reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    VAR             reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    PRINT           reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    FALSE           reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    TRUE            reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    CHAR            reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    FLOAT           reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    INTEGER         reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    NAME            reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    $end            reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+    RBRACE          reduce using rule 20 (assignment_statement -> location ASSIGN expr SEMI .)
+
+
+state 88
+
+    (16) while_statement -> WHILE expr LBRACE statements . RBRACE
+    RBRACE          shift and go to state 94
+
+
+state 89
+
+    (30) if_statement -> IF expr LBRACE statements . RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional
+    RBRACE          shift and go to state 95
+
+
+state 90
+
+    (27) const_definition -> CONST NAME _4_type_optional ASSIGN . expr SEMI
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 96
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 91
+
+    (21) variable_definition -> VAR NAME type _2_ASSIGN_expr_optional . SEMI
+    SEMI            shift and go to state 97
+
+
+state 92
+
+    (22) _2_ASSIGN_expr_optional -> ASSIGN . expr
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 98
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 93
+
+    (24) variable_definition -> VAR NAME _3_type_optional ASSIGN . expr SEMI
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    expr                           shift and go to state 99
+    literal                        shift and go to state 16
+    location                       shift and go to state 53
+
+state 94
+
+    (16) while_statement -> WHILE expr LBRACE statements RBRACE .
+    LBRACE          reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    LPAREN          reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    LNOT            reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    MINUS           reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    PLUS            reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    CONTINUE        reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    BREAK           reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    WHILE           reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    IF              reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    CONST           reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    VAR             reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    PRINT           reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    FALSE           reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    TRUE            reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    CHAR            reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    FLOAT           reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    INTEGER         reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    NAME            reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    $end            reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+    RBRACE          reduce using rule 16 (while_statement -> WHILE expr LBRACE statements RBRACE .)
+
+
+state 95
+
+    (30) if_statement -> IF expr LBRACE statements RBRACE . _5_ELSE_LBRACE_statements_RBRACE_optional
+    (31) _5_ELSE_LBRACE_statements_RBRACE_optional -> . ELSE LBRACE statements RBRACE
+    (32) _5_ELSE_LBRACE_statements_RBRACE_optional -> .
+    ELSE            shift and go to state 101
+    LBRACE          reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    LPAREN          reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    LNOT            reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    MINUS           reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    PLUS            reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    CONTINUE        reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    BREAK           reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    WHILE           reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    IF              reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    CONST           reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    VAR             reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    PRINT           reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    FALSE           reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    TRUE            reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    CHAR            reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    FLOAT           reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    INTEGER         reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    NAME            reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    $end            reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+    RBRACE          reduce using rule 32 (_5_ELSE_LBRACE_statements_RBRACE_optional -> .)
+
+    _5_ELSE_LBRACE_statements_RBRACE_optional shift and go to state 100
+
+state 96
+
+    (27) const_definition -> CONST NAME _4_type_optional ASSIGN expr . SEMI
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            shift and go to state 102
+    LOR             shift and go to state 37
+    LAND            shift and go to state 38
+    NE              shift and go to state 39
+    EQ              shift and go to state 40
+    GE              shift and go to state 41
+    GT              shift and go to state 42
+    LE              shift and go to state 43
+    LT              shift and go to state 44
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 97
+
+    (21) variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .
+    LBRACE          reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    LPAREN          reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    LNOT            reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    MINUS           reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    PLUS            reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    CONTINUE        reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    BREAK           reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    WHILE           reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    IF              reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    CONST           reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    VAR             reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    PRINT           reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    FALSE           reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    TRUE            reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    CHAR            reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    FLOAT           reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    INTEGER         reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    NAME            reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    $end            reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+    RBRACE          reduce using rule 21 (variable_definition -> VAR NAME type _2_ASSIGN_expr_optional SEMI .)
+
+
+state 98
+
+    (22) _2_ASSIGN_expr_optional -> ASSIGN expr .
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            reduce using rule 22 (_2_ASSIGN_expr_optional -> ASSIGN expr .)
+    LOR             shift and go to state 37
+    LAND            shift and go to state 38
+    NE              shift and go to state 39
+    EQ              shift and go to state 40
+    GE              shift and go to state 41
+    GT              shift and go to state 42
+    LE              shift and go to state 43
+    LT              shift and go to state 44
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 99
+
+    (24) variable_definition -> VAR NAME _3_type_optional ASSIGN expr . SEMI
+    (40) expr -> expr . LOR expr
+    (41) expr -> expr . LAND expr
+    (42) expr -> expr . NE expr
+    (43) expr -> expr . EQ expr
+    (44) expr -> expr . GE expr
+    (45) expr -> expr . GT expr
+    (46) expr -> expr . LE expr
+    (47) expr -> expr . LT expr
+    (48) expr -> expr . DIVIDE expr
+    (49) expr -> expr . TIMES expr
+    (50) expr -> expr . MINUS expr
+    (51) expr -> expr . PLUS expr
+    SEMI            shift and go to state 103
+    LOR             shift and go to state 37
+    LAND            shift and go to state 38
+    NE              shift and go to state 39
+    EQ              shift and go to state 40
+    GE              shift and go to state 41
+    GT              shift and go to state 42
+    LE              shift and go to state 43
+    LT              shift and go to state 44
+    DIVIDE          shift and go to state 45
+    TIMES           shift and go to state 46
+    MINUS           shift and go to state 47
+    PLUS            shift and go to state 48
+
+
+state 100
+
+    (30) if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .
+    LBRACE          reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    LPAREN          reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    LNOT            reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    MINUS           reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    PLUS            reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    CONTINUE        reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    BREAK           reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    WHILE           reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    IF              reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    CONST           reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    VAR             reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    PRINT           reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    FALSE           reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    TRUE            reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    CHAR            reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    FLOAT           reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    INTEGER         reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    NAME            reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    $end            reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+    RBRACE          reduce using rule 30 (if_statement -> IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional .)
+
+
+state 101
+
+    (31) _5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE . LBRACE statements RBRACE
+    LBRACE          shift and go to state 104
+
+
+state 102
+
+    (27) const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .
+    LBRACE          reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    LPAREN          reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    LNOT            reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    MINUS           reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    PLUS            reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    CONTINUE        reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    BREAK           reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    WHILE           reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    IF              reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    CONST           reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    VAR             reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    PRINT           reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    FALSE           reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    TRUE            reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    CHAR            reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    FLOAT           reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    INTEGER         reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    NAME            reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    $end            reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+    RBRACE          reduce using rule 27 (const_definition -> CONST NAME _4_type_optional ASSIGN expr SEMI .)
+
+
+state 103
+
+    (24) variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .
+    LBRACE          reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    LPAREN          reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    LNOT            reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    MINUS           reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    PLUS            reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    CONTINUE        reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    BREAK           reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    WHILE           reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    IF              reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    CONST           reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    VAR             reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    PRINT           reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    FALSE           reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    TRUE            reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    CHAR            reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    FLOAT           reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    INTEGER         reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    NAME            reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    $end            reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+    RBRACE          reduce using rule 24 (variable_definition -> VAR NAME _3_type_optional ASSIGN expr SEMI .)
+
+
+state 104
+
+    (31) _5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE . statements RBRACE
+    (1) statements -> . _1_statement_repeat
+    (2) _1_statement_repeat -> . _1_statement_items
+    (3) _1_statement_repeat -> .
+    (4) _1_statement_items -> . _1_statement_items _1_statement_item
+    (5) _1_statement_items -> . _1_statement_item
+    (6) _1_statement_item -> . statement
+    (7) statement -> . expr SEMI
+    (8) statement -> . continue_statement
+    (9) statement -> . break_statement
+    (10) statement -> . while_statement
+    (11) statement -> . if_statement
+    (12) statement -> . const_definition
+    (13) statement -> . variable_definition
+    (14) statement -> . assignment_statement
+    (15) statement -> . print_statement
+    (33) expr -> . LBRACE statements RBRACE
+    (34) expr -> . literal
+    (35) expr -> . location
+    (36) expr -> . LPAREN expr RPAREN
+    (37) expr -> . LNOT expr
+    (38) expr -> . MINUS expr
+    (39) expr -> . PLUS expr
+    (40) expr -> . expr LOR expr
+    (41) expr -> . expr LAND expr
+    (42) expr -> . expr NE expr
+    (43) expr -> . expr EQ expr
+    (44) expr -> . expr GE expr
+    (45) expr -> . expr GT expr
+    (46) expr -> . expr LE expr
+    (47) expr -> . expr LT expr
+    (48) expr -> . expr DIVIDE expr
+    (49) expr -> . expr TIMES expr
+    (50) expr -> . expr MINUS expr
+    (51) expr -> . expr PLUS expr
+    (17) continue_statement -> . CONTINUE SEMI
+    (18) break_statement -> . BREAK SEMI
+    (16) while_statement -> . WHILE expr LBRACE statements RBRACE
+    (30) if_statement -> . IF expr LBRACE statements RBRACE _5_ELSE_LBRACE_statements_RBRACE_optional
+    (27) const_definition -> . CONST NAME _4_type_optional ASSIGN expr SEMI
+    (21) variable_definition -> . VAR NAME type _2_ASSIGN_expr_optional SEMI
+    (24) variable_definition -> . VAR NAME _3_type_optional ASSIGN expr SEMI
+    (20) assignment_statement -> . location ASSIGN expr SEMI
+    (19) print_statement -> . PRINT expr SEMI
+    (54) literal -> . FALSE
+    (55) literal -> . TRUE
+    (56) literal -> . LPAREN RPAREN
+    (57) literal -> . CHAR
+    (58) literal -> . FLOAT
+    (59) literal -> . INTEGER
+    (52) location -> . NAME
+    RBRACE          reduce using rule 3 (_1_statement_repeat -> .)
+    LBRACE          shift and go to state 15
+    LPAREN          shift and go to state 18
+    LNOT            shift and go to state 19
+    MINUS           shift and go to state 20
+    PLUS            shift and go to state 21
+    CONTINUE        shift and go to state 22
+    BREAK           shift and go to state 23
+    WHILE           shift and go to state 24
+    IF              shift and go to state 25
+    CONST           shift and go to state 26
+    VAR             shift and go to state 28
+    PRINT           shift and go to state 29
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 31
+    CHAR            shift and go to state 32
+    FLOAT           shift and go to state 33
+    INTEGER         shift and go to state 34
+    NAME            shift and go to state 27
+
+    statements                     shift and go to state 105
+    _1_statement_repeat            shift and go to state 2
+    _1_statement_items             shift and go to state 3
+    _1_statement_item              shift and go to state 4
+    statement                      shift and go to state 5
+    expr                           shift and go to state 6
+    continue_statement             shift and go to state 7
+    break_statement                shift and go to state 8
+    while_statement                shift and go to state 9
+    if_statement                   shift and go to state 10
+    const_definition               shift and go to state 11
+    variable_definition            shift and go to state 12
+    assignment_statement           shift and go to state 13
+    print_statement                shift and go to state 14
+    literal                        shift and go to state 16
+    location                       shift and go to state 17
+
+state 105
+
+    (31) _5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements . RBRACE
+    RBRACE          shift and go to state 106
+
+
+state 106
+
+    (31) _5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .
+    LBRACE          reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    LPAREN          reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    LNOT            reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    MINUS           reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    PLUS            reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    CONTINUE        reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    BREAK           reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    WHILE           reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    IF              reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    CONST           reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    VAR             reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    PRINT           reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    FALSE           reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    TRUE            reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    CHAR            reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    FLOAT           reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    INTEGER         reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    NAME            reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    $end            reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+    RBRACE          reduce using rule 31 (_5_ELSE_LBRACE_statements_RBRACE_optional -> ELSE LBRACE statements RBRACE .)
+
+
+Conflicts:
+
+shift/reduce conflict for ASSIGN in state 84 resolved as shift

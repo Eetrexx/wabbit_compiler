@@ -1,261 +1,235 @@
 # Top-level function that runs everything
+
+from sly import Parser
+from sly.yacc import SlyLogger
+from tokenize import * 
 from model import *
-from tokenize import *
-class TokenList:
-    def __init__(self):
-        self.index = 0
-        self.items = []
-        self.max_tokens = 0
 
+class MyLogger(SlyLogger):
+    pass
 
-def parse_factor(tokens):
-    if tokens.items[tokens.index].type == 'INTEGER':
-        ret = Integer(int(tokens.items[tokens.index].value), tokens.items[tokens.index].lineno)
-    elif tokens.items[tokens.index].type == 'FLOAT':
-        ret = Float(float(tokens.items[tokens.index].value), tokens.items[tokens.index].lineno)
-    elif tokens.items[tokens.index].type in ['TRUE', 'FALSE']:
-        ret = Boolean(tokens.items[tokens.index].value, tokens.items[tokens.index].lineno)
-    elif tokens.items[tokens.index].type == 'NAME':
-        ret = Name(f'{tokens.items[tokens.index].value}', tokens.items[tokens.index].lineno)
-    elif tokens.items[tokens.index].type == 'CHAR':
-        ret = Char(f'{tokens.items[tokens.index].value}', tokens.items[tokens.index].lineno)
-    elif tokens.items[tokens.index].type == 'LPAREN':
-        if tokens.items[tokens.index+1].type == 'RPAREN':
-            ret = Unit(tokens.items[tokens.index].lineno)
-            tokens.index += 1
-        else:
-            tokens.index += 1
-            ret = parse_cond(tokens)
-            if tokens.items[tokens.index].type != 'RPAREN':
-                raise RuntimeError(f'Error at line {tokens.items[tokens.index].lineno} - Missing ")"')
-        
-    else:
-        raise RuntimeError(f'Error parsing token (at line {tokens.items[tokens.index].lineno} - {tokens.items[tokens.index]})- invalid literal {tokens.items[tokens.index].value}')
+class CalcParser(Parser):
 
-    tokens.index += 1
-    return ret
+    tokens = CalcLexer.tokens
+    f = open("logging.out", "wt")
+    log = MyLogger(f) 
 
-def parse_unary(tokens):
-    op = tokens.items[tokens.index].type in ['LNOT', 'PLUS', 'MINUS']
+    precedence = (
+            ('left', LOR),
+            ('left', LAND),
+            ('nonassoc', LT, LE, GT, GE, EQ, NE),
+            ('left', PLUS, MINUS),
+            ('left', TIMES, DIVIDE),
+            ('right', UPLUS, UMINUS, LNOT),
+    )
 
-    if not op:
-        return parse_factor(tokens)
-    else:
-        op = tokens.items[tokens.index].value
-        tokens.index += 1
-        return UnaryOp(op, parse_factor(tokens), tokens.items[tokens.index].lineno)
-        
+    @_('{ statement }')
+    def statements(self, p):
+       return p.statement 
 
-def parse_term(tokens):
-    unary = parse_unary(tokens)
-    while True:
-        op = tokens.items[tokens.index].type in ['TIMES', 'DIVIDE']
-        if not op:
-            return unary 
-        else:
-            op = tokens.items[tokens.index].value
-            tokens.index += 1
-        unary = BinOp(op, unary, parse_unary(tokens), tokens.items[tokens.index].lineno)
+    @_('print_statement')
+    def statement(self, p):
+        return p.print_statement
 
-def parse_expression(tokens):
-    term = parse_term(tokens)
-    while True:
-        op = tokens.items[tokens.index].type in ['PLUS', 'MINUS']
-        if not op:
-            return term
-        else:
-            op = tokens.items[tokens.index].value
-            tokens.index += 1
-
-        term = BinOp(op, term, parse_term(tokens), tokens.items[tokens.index].lineno)
-
-def parse_cond(tokens):
-    expr = parse_expression(tokens)
-    while True:
-        op = tokens.items[tokens.index].type in ['LE', 'GE', 'LT', 'GT', 'EQ', 'LOR', 'LAND', 'NE']
-        if not op:
-            return expr
-        else:
-            op = tokens.items[tokens.index].value
-            tokens.index += 1
-
-        expr = BinOp(op, expr, parse_expression(tokens), tokens.items[tokens.index].lineno)
-
-def parse_print_statement(tokens):
-    tokens.index += 1
-    expr = parse_cond(tokens)
+    @_('assignment_statement')
+    def statement(self, p):
+        return p.assignment_statement
     
-    if tokens.items[tokens.index].type != 'SEMI':
-        raise RuntimeError(f'Error at line number {tokens.items[tokens.index].lineno}: expected ; at the end')
-    tokens.index += 1
-    return PrintStmt(expr, tokens.items[tokens.index].lineno)
+    @_('variable_definition')
+    def statement(self, p):
+        return p.variable_definition
 
-def parse_var_def(tokens):
-    tokens.index += 1
-    if tokens.items[tokens.index].type == 'NAME':
-        if tokens.items[tokens.index+1].value in ['int', 'float', 'char', 'bool']:
-            if tokens.items[tokens.index+2].type == 'SEMI':
-                
-                name = Name(f'{tokens.items[tokens.index].value}', tokens.items[tokens.index].lineno)
-                type = Type(f'{tokens.items[tokens.index+1].value}', tokens.items[tokens.index].lineno)
-                vardef = VarDef(name, type, None, tokens.items[tokens.index].lineno)
-                tokens.index += 3
-            elif tokens.items[tokens.index+2].type == 'ASSIGN':
-                name = Name(f'{tokens.items[tokens.index].value}', tokens.items[tokens.index].lineno)
-                type = Type(f'{tokens.items[tokens.index+1].value}', tokens.items[tokens.index].lineno)
-                tokens.index += 3
-                vardef = VarDef(name, type, parse_cond(tokens), tokens.items[tokens.index].lineno)
+    @_('const_definition')
+    def statement(self, p):
+        return p.const_definition
 
-            else:
-                raise RuntimeError(f'Error on lineno {tokens.items[tokens.index].lineno} - invalid variable declaration')
-        elif tokens.items[tokens.index+1].type == 'ASSIGN':
-            name = Name(f'{tokens.items[token.index].value}', tokens.items[tokens.index].lineno)
-            tokens += 2
-            vardef = VarDef(name, None, parse_cond(tokens), tokens.items[tokens.index].lineno)
+    @_('if_statement')
+    def statement(self, p):
+        return p.if_statement
+
+    @_('while_statement')
+    def statement(self, p):
+        return p.while_statement
+
+    @_('break_statement')
+    def statement(self, p):
+        return p.break_statement
+
+    @_('continue_statement')
+    def statement(self, p):
+        return p.continue_statement
+
+    @_('expr SEMI')
+    def statement(self, p):
+        return p.expr
+    
+    @_('WHILE expr LBRACE statements RBRACE')
+    def while_statement(self, p):
+        return WhileStmt(p.expr, p.statements)
+
+    @_('CONTINUE SEMI')
+    def continue_statement(self, p):
+        return ContinueStmt()
+
+    @_('BREAK SEMI')
+    def break_statement(self, p):
+        return BreakStmt()
+
+    @_('PRINT expr SEMI')
+    def print_statement(self, p):
+        return PrintStmt(p.expr, p.lineno)
+
+    @_('location ASSIGN expr SEMI')
+    def assignment_statement(self, p):
+        return Assignment(p.location, p.expr, p.lineno)
+
+    @_('VAR NAME [ type ] ASSIGN expr SEMI')
+    def variable_definition(self, p):
+        type_val = p.type
+        expr_val = p.expr
+        return VarDef(Name(p.NAME, p.lineno), type_val, expr_val, p.lineno)
+
+    @_('VAR NAME type [ ASSIGN expr ] SEMI')
+    def variable_definition(self, p):
+        type_val = p.type
+        expr_val = p.expr
+        return VarDef(Name(p.NAME, p.lineno), type_val, expr_val, p.lineno)
+    
+
+    @_('CONST NAME [ type ] ASSIGN expr SEMI')
+    def const_definition(self, p):
+        if p.type:
+            return ConstDef(Name(p.NAME, p.lineno), p.type, p.expr, p.lineno)
         else:
-            raise RuntimeError(f'Error on lineno {tokens.items[tokens.index].lineno} - invalid variable type')
-    else:
-        raise RuntimeError(f'Error on lineno {tokens.items[tokens.index].lineno} - invalid variable name')
-    return vardef
+            return ConstDef(Name(p.NAME, p.lineno), None, p.expr, p.lineno)
 
-def parse_const_def(tokens):
+    @_('IF expr LBRACE statements RBRACE [ ELSE LBRACE statements RBRACE ]')
+    def if_statement(self, p):
+        else_statements = None
+        if p.ELSE:
+            else_statements = ElseStmt(p.statements1, p.lineno) 
+
+        return IfStmt(p.expr, p.statements0, else_statements, p.lineno)
+            
+
+    @_('expr PLUS expr')
+    def expr(self, p):
+        return BinOp(p.PLUS, p.expr0, p.expr1, p.lineno)
+
+    @_('expr MINUS expr')
+    def expr(self, p):
+        return BinOp(p.MINUS, p.expr0, p.expr1, p.lineno)
+
+    @_('expr TIMES expr')
+    def expr(self, p):
+        return BinOp(p.TIMES, p.expr0, p.expr1, p.lineno)
     
-    tokens.index += 1
-    constdef = None
-    if tokens.items[tokens.index].type == 'NAME':
-        if tokens.items[tokens.index+1].value in ['int', 'float','char','bool']:
-            if tokens.items[tokens.index+2].type == 'ASSIGN':
-                name = Name(f'{tokens.items[tokens.index].value}', tokens.items[tokens.index].lineno)
-                type = Type(f'{tokens.items[tokens.index+1].value}', tokens.items[tokens.index].lineno)
-                tokens.index += 3
-                constdef = ConstDef(name, type, parse_cond(tokens), tokens.items[tokens.index].lineno)
-                
-        elif tokens.items[tokens.index+1].type == 'ASSIGN':
-            name = Name(f'{tokens.items[tokens.index].value}', tokens.items[tokens.index].lineno)
-            tokens.index += 2
-            constdef = ConstDef(name, None, parse_cond(tokens), tokens.items[tokens.index].lineno)
-        else:
-            raise RuntimeError(f'Error on lineno {tokens[0].lineno} - invalid constant definition')
-    else:
-        raise RuntimeError(f'Error on lineno {tokens[0].lineno} - invalid constant name')
-    return constdef
+    @_('expr DIVIDE expr')
+    def expr(self, p):
+        return BinOp(p.DIVIDE, p.expr0, p.expr1, p.lineno)
 
-def parse_if_statement(tokens):
-    else_statement = None
-    tokens.index += 1
-    cond = parse_cond(tokens)
-    if tokens.items[tokens.index].type == 'LBRACE':
-        statements = parse_compound_statement(tokens)
+    @_('expr LT expr')
+    def expr(self, p):
+        return BinOp(p.LT, p.expr0, p.expr1, p.lineno)
 
-    if tokens.items[tokens.index].type == 'ELSE':
-        else_statement = parse_else_statement(tokens)
+    @_('expr LE expr')
+    def expr(self, p):
+        return BinOp(p.LE, p.expr0, p.expr1, p.lineno)
+
+
+    @_('expr GT expr')
+    def expr(self, p):
+        return BinOp(p.GT, p.expr0, p.expr1, p.lineno)
+
+    @_('expr GE expr')
+    def expr(self, p):
+        return BinOp(p.GE, p.expr0, p.expr1, p.lineno)
+
+    @_('expr EQ expr')
+    def expr(self, p):
+        return BinOp(p.EQ, p.expr0, p.expr1, p.lineno)
+
+    @_('expr NE expr')
+    def expr(self, p):
+        return BinOp(p.NE, p.expr0, p.expr1, p.lineno)
     
-    return IfStmt(cond, statements, else_statement, tokens.items[tokens.index].lineno)
+    @_('expr LAND expr')
+    def expr(self, p):
+        return BinOp(p.LAND, p.expr0, p.expr1, p.lineno)
 
-def parse_else_statement(tokens):
-    tokens.index += 1
-    
-    if tokens.items[tokens.index].type == 'LBRACE':
-        statements = parse_compound_statement(tokens)
-    elif tokens.items[tokens.index].type == 'IF':
-        statements = parse_if_statement(tokens)
+    @_('expr LOR expr')
+    def expr(self, p):
+        return BinOp(p.LOR, p.expr0, p.expr1, p.lineno)
 
-    return ElseStmt(statements, tokens.items[tokens.index].lineno)
+    @_('PLUS expr %prec UPLUS')
+    def expr(self, p):
+        return UnaryOp(p.PLUS, p.expr, p.lineno)
 
-def parse_while_statement(tokens):
+    @_('MINUS expr %prec UMINUS')
+    def expr(self, p):
+        return UnaryOp(p.MINUS, p.expr, p.lineno)
 
-    tokens.index += 1
-    cond = parse_cond(tokens)
-    
-    if tokens.items[tokens.index].type == 'LBRACE':
-        statements = parse_compound_statement(tokens)
+    @_('LNOT expr')
+    def expr(self, p):
+        return UnaryOp(p.LNOT, p.expr, p.lineno)
 
-    return WhileStmt(cond, statements)
+    @_('LPAREN expr RPAREN')
+    def expr(self, p):
+        return p.expr
 
 
-def parse_assignment(tokens):
-    name = Name(f'{tokens.items[tokens.index].value}', tokens.items[tokens.index].lineno)
+    @_('location')
+    def expr(self, p):
+        return p.location
 
-    tokens.index += 2
-    ret_val = Assignment(name, parse_cond(tokens), tokens.items[tokens.index].lineno)
+    @_('literal')
+    def expr(self, p):
+        return p.literal
 
-    return ret_val
+    @_('LBRACE statements RBRACE')
+    def expr(self, p):
+        return CompoundStmt(p.statements)
 
-def parse_continue_statement(tokens):
-    ret_val = ContinueStmt()
-    tokens.index += 2
-    return ret_val
+    @_('NAME')
+    def location(self, p):
+        return Name(p.NAME, p.lineno)
 
-def parse_break_statement(tokens):
-    ret_val = BreakStmt()
-    tokens.index += 2
-    return ret_val
+    @_('NAME')
+    def type(self, p):
+        return Type(p.NAME, p.lineno)
 
-def parse_statement(tokens):
-    ret_val = None
-    
-    if tokens.index < tokens.max_tokens:
-        if tokens.items[tokens.index].type == 'PRINT':
-            ret_val = parse_print_statement(tokens)
-        elif tokens.items[tokens.index].type == 'VAR':
-            ret_val = parse_var_def(tokens)
-        elif tokens.items[tokens.index].type == 'CONST':
-            ret_val = parse_const_def(tokens)
-        elif tokens.items[tokens.index].type == 'NAME':
-            if tokens.items[tokens.index+1].type == 'ASSIGN':
-                ret_val = parse_assignment(tokens)
-        elif tokens.items[tokens.index].type == 'IF':
-            ret_val = parse_if_statement(tokens)
-        elif tokens.items[tokens.index].type == 'WHILE':
-            ret_val = parse_while_statement(tokens)
-        elif tokens.items[tokens.index].type == 'BREAK':
-            ret_val = parse_break_statement(tokens)
-        elif tokens.items[tokens.index].type == 'CONTINUE':
-            ret_val = parse_continue_statement(tokens)
-        elif tokens.items[tokens.index].type == 'ELSE':
-            ret_val = parse_else_statement(tokens)
-        else:
-            tokens.index += 1
-        
-    return ret_val
+    @_('INTEGER')
+    def literal(self, p):
+        return Integer(p.INTEGER, p.lineno) 
 
-def parse_compound_statement(tokens):
-    ret_val = []
-    
-    if tokens.items[tokens.index].type == 'LBRACE':
-        tokens.index += 1
-        i_count = tokens.index
-        range_count = 0
-        while tokens.items[i_count].type != 'RBRACE':
-            range_count += 1
-            i_count += 1
-        while range_count > 0:
-            add_item = parse_statement(tokens)
-            if add_item:
-                ret_val.append(add_item)
-            range_count -= 1
+    @_('FLOAT')
+    def literal(self, p):
+        return Float(p.FLOAT, p.lineno) 
 
-    else:
-         while tokens.index < tokens.max_tokens:
-            add_item = parse_statement(tokens)
-            if add_item:
-                ret_val.append(add_item)
+    @_('CHAR')
+    def literal(self, p):
+        return Char(p.CHAR, p.lineno) 
 
-    return CompoundStmt(ret_val)
+    @_('LPAREN RPAREN')
+    def literal(self, p):
+        return Unit(p.lineno) 
 
+    @_('TRUE')
+    def literal(self, p):
+        return Boolean(p.TRUE, p.lineno) 
+
+    @_('FALSE')
+    def literal(self, p):
+        return Boolean(p.FALSE, p.lineno) 
 
 def parse_tokens(tokens):
     
-    return parse_compound_statement(tokens)
+    parser = CalcParser()
+    return parser.parse(tokens)
 
-    
+
 
 def parse_source(text):
-    tokens = TokenList()
-    
-    for tok in tokenize(text):
-        tokens.items.append(tok)
-        tokens.max_tokens += 1
-
+    tokens = tokenize(text)
     model = parse_tokens(tokens)     # You need to implement this part
     return model

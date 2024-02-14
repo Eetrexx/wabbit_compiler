@@ -10,7 +10,7 @@ def interpret_program(model):
     interpret(model, env)
 
 def interpret_integer(node, env):
-    return node.value
+    return int(node.value)
 
 def interpret_boolean(node, env):
     if node.value == "true":
@@ -19,10 +19,10 @@ def interpret_boolean(node, env):
         return False
 
 def interpret_float(node, env):
-    return node.value
+    return float(node.value)
 
 def interpret_unit(node, env):
-    return None
+    return "()" 
     
 def interpret_unaryop(node, env):
     value = interpret(node.expr, env)
@@ -36,39 +36,80 @@ def interpret_unaryop(node, env):
         raise RuntimeError(f'Error: unsupported unary operation')
 
 def interpret_binop(node, env):
-    leftval = interpret(node.left, env)
-    rightval = interpret(node.right, env)
-    assert type(leftval) == type(rightval)
     if node.op == '+':
+        leftval = interpret(node.left, env)
+        rightval = interpret(node.right, env)
         return leftval + rightval
     elif node.op == '-':
+        leftval = interpret(node.left, env)
+        rightval = interpret(node.right, env)
         return leftval - rightval
     elif node.op == '*':
+        leftval = interpret(node.left, env)
+        rightval = interpret(node.right, env)
         return leftval * rightval
     elif node.op == '/':
-        return leftval / rightval
+        leftval = interpret(node.left, env)
+        rightval = interpret(node.right, env)
+        value = leftval / rightval
+        if isinstance(leftval, int):
+            value = int(value)
+        return value 
     elif node.op == '<':
+        leftval = interpret(node.left, env)
+        rightval = interpret(node.right, env)
         return leftval < rightval
     elif node.op == '>':
+        leftval = interpret(node.left, env)
+        rightval = interpret(node.right, env)
         return leftval > rightval
     elif node.op == '==':
+        leftval = interpret(node.left, env)
+        rightval = interpret(node.right, env)
         return leftval == rightval
     elif node.op == '!=':
-        return leftval == rightval
+        leftval = interpret(node.left, env)
+        rightval = interpret(node.right, env)
+        return leftval != rightval
     elif node.op == '>=':
-        return leftval == rightval
+        leftval = interpret(node.left, env)
+        rightval = interpret(node.right, env)
+        return leftval >= rightval
     elif node.op == '<=':
-        return leftval == rightval
+        leftval = interpret(node.left, env)
+        rightval = interpret(node.right, env)
+        return leftval <= rightval
     elif node.op == '&&':
-        return leftval == rightval
+        leftval = interpret(node.left, env)
+        if leftval is False:
+            return leftval
+        rightval = interpret(node.right, env)
+        return leftval and rightval
     elif node.op == '||':
-        return leftval == rightval
+        leftval = interpret(node.left, env)
+        if leftval is True:
+            return leftval
+        rightval = interpret(node.right, env)
+        return leftval or rightval
     # Expand to check for different operators
     # ...
 
 
 def interpret_printstmt(node, env):
-    print(f'{interpret(node.expr, env)}')
+    value = interpret(node.expr, env)
+
+    
+    if value == "()":
+        print(value)
+    elif isinstance(value, str):
+        print(f'{value}', end="")
+    else:
+
+        if value is True:
+            value = "true"
+        elif value is False:
+            value = "false"
+        print(f'{value}')
 
 
 def interpret_name(node, env):
@@ -77,14 +118,13 @@ def interpret_name(node, env):
     elif node.value in env["var"]:
         return env["var"][node.value]
     else:
-        return None
+        return "()" 
     
 def interpret_assignment(node, env):
     rightval = interpret(node.expr, env)
     leftval = interpret(node.location, env)
 
     if node.location.value in env["var"]:
-        assert type(leftval) == type(rightval)
         env["var"][node.location.value] = rightval    
     elif node.location.value in env["const"]:
         raise RuntimeError(f"{node.location.value} is a constant")
@@ -109,8 +149,16 @@ def interpret_vardef(node, env):
     else:
         if node.type.value == "float":
             rightval = 0.0
-        else:
+        elif node.type.value == "int":
             rightval = 0
+        elif node.type.value == "char":
+            rightval = 'a'
+        elif node.type.value == "bool":
+            rightval = False
+        elif node.type.value == "unit":
+            rightval = "()"
+        else:
+            rightval = "()" 
         
     env["var"][node.name.value] = rightval
 
@@ -121,19 +169,18 @@ def interpret_constdef(node, env):
 def interpret_ifstmt(node, env):
     cond = interpret(node.cond, env)
     if cond:
-        return interpret(node.stmtlist, env)
+        return interpret(CompoundStmt(node.stmtlist), env)
     elif node.else_stmt:
         return interpret(node.else_stmt, env)
 
 def interpret_else_stmt(node, env):
-    interpret(node.stmtlist, env)
+    interpret(CompoundStmt(node.stmtlist), env)
 
 def interpret_while_stmt(node, env):
     cond = interpret(node.cond, env)
     while cond:
-        loop_exit = interpret(node.stmtlist, env)
-
-
+        loop_exit = interpret_compound_stmt(CompoundStmt(node.stmtlist), env)
+        
         cond = interpret(node.cond, env)
 
         if loop_exit == "continue":
@@ -151,11 +198,16 @@ def interpret_break_stmt(node, env):
     return "break"
 
 def interpret_char(node, env):
-    return node.value
+    return eval(node.value)
+
 
 # Internal function to interpret a node in the environment
 def interpret(node, env):
-    if isinstance(node, Integer):
+    
+    if isinstance(node, list):
+        for item in node:
+            interpret(item, env)
+    elif isinstance(node, Integer):
         return interpret_integer(node, env)
     elif isinstance(node, Float):
         return interpret_float(node, env)
@@ -195,4 +247,5 @@ def interpret(node, env):
         return interpret_char(node, env)
     # Expand to check for different node types
     # ...
-    raise RuntimeError(f"Can't interpret {node}")
+    else:
+        raise RuntimeError(f"Can't interpret {node}")

@@ -1,3 +1,4 @@
+
 class Node:
     def __init__(self, lineno):
         self.lineno = lineno
@@ -225,76 +226,113 @@ class WhileStmt:
     
 # ------ Debugging function to convert a model into source code (for easier viewing)
 
-def to_source_list(node_list):
+
+def to_source_list(node_list, rec_level):
     ret_str = ""
+    ident_spaces = "    "
     for node in node_list:
-        ret_str += f'''{to_source(node)}\n''' 
+        n = 0
+        while n < rec_level:
+            ret_str += ident_spaces
+            n+=1
+        ret_str += f'''{to_source_internal(node, rec_level)}\n''' 
 
     return ret_str
 
-def to_source_neo(node_list):
+def to_source_singleline(node_list, rec_level):
     ret_str = ""
     for node in node_list:
-        ret_str += f'''    {to_source(node)}\n'''
-
-    return ret_str
-def to_source_singleline(node_list):
-    ret_str = ""
-    for node in node_list:
-        ret_str += f' {to_source(node)}' 
+        ret_str += f' {to_source_internal(node, rec_level)}' 
+        #print(type(node)) 
+        if isinstance(node, Integer) or isinstance(node, Float) or isinstance(node, Char) or isinstance(node, Boolean) or isinstance(node, Unit) or isinstance(node, BinOp) or isinstance(node, Name):
+            ret_str += ";"
 
     ret_str += f' '
 
     return ret_str
 
 def to_source(node):
+    return to_source_internal(node, 0)
+
+def to_source_internal(node, rec_level):
 
     if isinstance(node, list):
-        return f'{to_source_list(node)}'
+        return f'{to_source_list(node, rec_level)}'
     elif isinstance(node, Integer):
         return str(node.value)
+    elif isinstance(node, Char):
+        return node.value
     elif isinstance(node, Float):
-        return repr(node.value)
+        return str(node.value)
     elif isinstance(node, Unit):
         return f'()'
     elif isinstance(node, Boolean):
-        return repr(node.value)
+        return str(node.value)
     elif isinstance(node, Name):
         return str(node.value)
     elif isinstance(node, Statement):
-        return f'{to_source(node.expr)};'
+        return f'{to_source_internal(node.expr, rec_level)};'
     elif isinstance(node, CompoundStmt):
-        return f'{{{to_source_singleline(node.expr)}}}' 
+        return f'{{{to_source_singleline(node.expr, rec_level)}}}' 
     elif isinstance(node, Type):
         return str(node.value)
     elif isinstance(node, UnaryOp):
-        return "" + node.op + to_source(node.expr)
+        return "" + node.op + to_source_internal(node.expr, rec_level)
     elif isinstance(node, BinOp):
-        return f'{to_source(node.left)} {node.op} {to_source(node.right)}'
+        return f'{to_source_internal(node.left, rec_level)} {node.op} {to_source_internal(node.right, rec_level)}'
     elif isinstance(node, PrintStmt):
-        return f'print {to_source(node.expr)};'
+        return f'print {to_source_internal(node.expr, rec_level)};'
     elif isinstance(node, ConstDef):
-        return f'const {to_source(node.name)} = {to_source(node.expr)};'
+        return f'const {to_source_internal(node.name, rec_level)} = {to_source_internal(node.expr, rec_level)};'
     elif isinstance(node, VarDef):
         if node.expr is None:
-            return f'var {to_source(node.name)} {to_source(node.type)};'
+            return f'var {to_source_internal(node.name, rec_level)} {to_source_internal(node.type, rec_level)};'
         elif node.type is None:
-            return f'var {to_source(node.name)} = {to_source(node.expr)};'
+            return f'var {to_source_internal(node.name, rec_level)} = {to_source_internal(node.expr, rec_level)};'
         else:
-            return f'var {to_source(node.name)} {to_source(node.type)} = {to_source(node.expr)};'
+            return f'var {to_source_internal(node.name, rec_level)} {to_source_internal(node.type, rec_level)} = {to_source_internal(node.expr, rec_level)};'
     elif isinstance(node, Assignment):
-        return f'{to_source(node.location)} = {to_source(node.expr)};'
+        return f'{to_source_internal(node.location, rec_level)} = {to_source_internal(node.expr, rec_level)};'
     elif isinstance(node, IfStmt):
-        if node.else_stmt is None:
-            return f'''if {to_source(node.cond)} {{\n{to_source_neo(node.stmtlist)}}}'''
-        else:
-            return f'if {to_source(node.cond)} {{\n{to_source_neo(node.stmtlist)}}} {to_source(node.else_stmt)}'
+        ret_str = f'if {to_source_internal(node.cond, rec_level)} {{\n'
+        rec_level += 1
+        ret_str += f'{to_source_list(node.stmtlist, rec_level)}'
+        rec_level -= 1
+        n = 0
+        while n < rec_level:
+            ret_str += "    "
+            n += 1
+        ret_str += "}"
+
+        if node.else_stmt:
+            ret_str += f' {to_source_internal(node.else_stmt, rec_level)}'
+
+        return ret_str
 
     elif isinstance(node, ElseStmt):
-        return f'else {{\n{to_source_neo(node.stmtlist)}}}'
+        ret_str = f'else {{\n'
+        rec_level += 1
+        ret_str += f'{to_source_list(node.stmtlist, rec_level)}'
+        rec_level -= 1
+        n = 0
+        while n < rec_level:
+            ret_str += "    "
+            n += 1
+        ret_str += "}"
+        return ret_str 
     elif isinstance(node, WhileStmt):
-        
-        return f'''while {to_source(node.cond)} {{\n{to_source_neo(node.stmtlist)}}}'''
+       
+        ret_str = f'while {to_source_internal(node.cond, rec_level)} {{\n'
+        rec_level += 1
+        ret_str += f'{to_source_list(node.stmtlist, rec_level)}'
+        rec_level -= 1
+        n = 0
+        while n < rec_level:
+            ret_str += "    "
+            n += 1
+        ret_str += "}"
+        return ret_str
+
     elif isinstance(node, ContinueStmt):
         return f'continue;'
     elif isinstance(node, BreakStmt):
