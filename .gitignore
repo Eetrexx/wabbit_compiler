@@ -2,3 +2,4 @@ src/__pycache__/
 src/tests/__pycache__/
 note.md
 logging.out
+parser.out
