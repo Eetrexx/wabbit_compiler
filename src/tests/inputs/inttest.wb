@@ -1,0 +1,182 @@
+ 	
+
+/* floattest.wb
+
+   Test all of the basic expressions on floats
+*/
+
+/* Floating point operations */
+
+const fa = 1.0;        // Float constant
+var fb float = 2.0;    // Float variable declaration (with value)
+var fc float;          // Variable declaration (no value)
+
+fc = fa + fb + 3.0;    // Assignment to an float
+
+print fc;              // Float printing.  Outputs 6.0
+print fa + fb;         // Outputs 3.0
+print fa - fb;         // Outputs -1.0
+print fb * fc;         // Outputs 12.0
+print fc / fb;         // Outputs 3.0
+print +fa;             // Outputs 1.0
+print -fa;             // Outputs -1.0
+print fa + fb * fc;       // Outputs 13.0
+
+	
+
+Token(type='CONST', value='const', lineno=8, index=101, end=106)↩
+Token(type='NAME', value='fa', lineno=8, index=107, end=109)↩
+Token(type='ASSIGN', value='=', lineno=8, index=110, end=111)↩
+Token(type='FLOAT', value='1.0', lineno=8, index=112, end=115)↩
+Token(type='SEMI', value=';', lineno=8, index=115, end=116)↩
+Token(type='VAR', value='var', lineno=9, index=142, end=145)↩
+Token(type='NAME', value='fb', lineno=9, index=146, end=148)↩
+Token(type='NAME', value='float', lineno=9, index=149, end=154)↩
+Token(type='ASSIGN', value='=', lineno=9, index=155, end=156)↩
+Token(type='FLOAT', value='2.0', lineno=9, index=157, end=160)↩
+Token(type='SEMI', value=';', lineno=9, index=160, end=161)↩
+Token(type='VAR', value='var', lineno=10, index=208, end=211)↩
+Token(type='NAME', value='fc', lineno=10, index=212, end=214)↩
+Token(type='NAME', value='float', lineno=10, index=215, end=220)↩
+Token(type='SEMI', value=';', lineno=10, index=220, end=221)↩
+Token(type='NAME', value='fc', lineno=12, index=267, end=269)↩
+Token(type='ASSIGN', value='=', lineno=12, index=270, end=271)↩
+Token(type='NAME', value='fa', lineno=12, index=272, end=274)↩
+Token(type='PLUS', value='+', lineno=12, index=275, end=276)↩
+Token(type='NAME', value='fb', lineno=12, index=277, end=279)↩
+Token(type='PLUS', value='+', lineno=12, index=280, end=281)↩
+Token(type='FLOAT', value='3.0', lineno=12, index=282, end=285)↩
+Token(type='SEMI', value=';', lineno=12, index=285, end=286)↩
+Token(type='PRINT', value='print', lineno=14, index=317, end=322)↩
+Token(type='NAME', value='fc', lineno=14, index=323, end=325)↩
+Token(type='SEMI', value=';', lineno=14, index=325, end=326)↩
+Token(type='PRINT', value='print', lineno=15, index=372, end=377)↩
+Token(type='NAME', value='fa', lineno=15, index=378, end=380)↩
+Token(type='PLUS', value='+', lineno=15, index=381, end=382)↩
+Token(type='NAME', value='fb', lineno=15, index=383, end=385)↩
+Token(type='SEMI', value=';', lineno=15, index=385, end=386)↩
+Token(type='PRINT', value='print', lineno=16, index=410, end=415)↩
+Token(type='NAME', value='fa', lineno=16, index=416, end=418)↩
+Token(type='MINUS', value='-', lineno=16, index=419, end=420)↩
+Token(type='NAME', value='fb', lineno=16, index=421, end=423)↩
+Token(type='SEMI', value=';', lineno=16, index=423, end=424)↩
+Token(type='PRINT', value='print', lineno=17, index=449, end=454)↩
+Token(type='NAME', value='fb', lineno=17, index=455, end=457)↩
+Token(type='TIMES', value='*', lineno=17, index=458, end=459)↩
+Token(type='NAME', value='fc', lineno=17, index=460, end=462)↩
+Token(type='SEMI', value=';', lineno=17, index=462, end=463)↩
+Token(type='PRINT', value='print', lineno=18, index=488, end=493)↩
+Token(type='NAME', value='fc', lineno=18, index=494, end=496)↩
+Token(type='DIVIDE', value='/', lineno=18, index=497, end=498)↩
+Token(type='NAME', value='fb', lineno=18, index=499, end=501)↩
+Token(type='SEMI', value=';', lineno=18, index=501, end=502)↩
+Token(type='PRINT', value='print', lineno=19, index=526, end=531)↩
+Token(type='PLUS', value='+', lineno=19, index=532, end=533)↩
+Token(type='NAME', value='fa', lineno=19, index=533, end=535)↩
+Token(type='SEMI', value=';', lineno=19, index=535, end=536)↩
+Token(type='PRINT', value='print', lineno=20, index=564, end=569)↩
+Token(type='MINUS', value='-', lineno=20, index=570, end=571)↩
+Token(type='NAME', value='fa', lineno=20, index=571, end=573)↩
+Token(type='SEMI', value=';', lineno=20, index=573, end=574)↩
+Token(type='PRINT', value='print', lineno=21, index=603, end=608)↩
+Token(type='NAME', value='fa', lineno=21, index=609, end=611)↩
+Token(type='PLUS', value='+', lineno=21, index=612, end=613)↩
+Token(type='NAME', value='fb', lineno=21, index=614, end=616)↩
+Token(type='TIMES', value='*', lineno=21, index=617, end=618)↩
+Token(type='NAME', value='fc', lineno=21, index=619, end=621)↩
+Token(type='SEMI', value=';', lineno=21, index=621, end=622)
+
+	
+
+Token(type='CONST', value='const', lineno=3, index=101, end=106)↩
+Token(type='NAME', value='fa', lineno=3, index=107, end=109)↩
+Token(type='ASSIGN', value='=', lineno=3, index=110, end=111)↩
+Token(type='INTEGER', value='1', lineno=3, index=112, end=113)↩
+Token(type='FLOAT', value='.0', lineno=3, index=113, end=115)↩
+Token(type='SEMI', value=';', lineno=3, index=115, end=116)↩
+Token(type='VAR', value='var', lineno=4, index=142, end=145)↩
+Token(type='NAME', value='fb', lineno=4, index=146, end=148)↩
+Token(type='NAME', value='float', lineno=4, index=149, end=154)↩
+Token(type='ASSIGN', value='=', lineno=4, index=155, end=156)↩
+Token(type='INTEGER', value='2', lineno=4, index=157, end=158)↩
+Token(type='FLOAT', value='.0', lineno=4, index=158, end=160)↩
+Token(type='SEMI', value=';', lineno=4, index=160, end=161)↩
+Token(type='VAR', value='var', lineno=5, index=208, end=211)↩
+Token(type='NAME', value='fc', lineno=5, index=212, end=214)↩
+Token(type='NAME', value='float', lineno=5, index=215, end=220)↩
+Token(type='SEMI', value=';', lineno=5, index=220, end=221)↩
+Token(type='NAME', value='fc', lineno=7, index=267, end=269)↩
+Token(type='ASSIGN', value='=', lineno=7, index=270, end=271)↩
+Token(type='NAME', value='fa', lineno=7, index=272, end=274)↩
+Token(type='PLUS', value='+', lineno=7, index=275, end=276)↩
+Token(type='NAME', value='fb', lineno=7, index=277, end=279)↩
+Token(type='PLUS', value='+', lineno=7, index=280, end=281)↩
+Token(type='INTEGER', value='3', lineno=7, index=282, end=283)↩
+Token(type='FLOAT', value='.0', lineno=7, index=283, end=285)↩
+Token(type='SEMI', value=';', lineno=7, index=285, end=286)↩
+Token(type='PRINT', value='print', lineno=9, index=317, end=322)↩
+Token(type='NAME', value='fc', lineno=9, index=323, end=325)↩
+Token(type='SEMI', value=';', lineno=9, index=325, end=326)↩
+Token(type='PRINT', value='print', lineno=10, index=372, end=377)↩
+Token(type='NAME', value='fa', lineno=10, index=378, end=380)↩
+Token(type='PLUS', value='+', lineno=10, index=381, end=382)↩
+Token(type='NAME', value='fb', lineno=10, index=383, end=385)↩
+Token(type='SEMI', value=';', lineno=10, index=385, end=386)↩
+Token(type='PRINT', value='print', lineno=11, index=410, end=415)↩
+Token(type='NAME', value='fa', lineno=11, index=416, end=418)↩
+Token(type='MINUS', value='-', lineno=11, index=419, end=420)↩
+Token(type='NAME', value='fb', lineno=11, index=421, end=423)↩
+Token(type='SEMI', value=';', lineno=11, index=423, end=424)↩
+Token(type='PRINT', value='print', lineno=12, index=449, end=454)↩
+Token(type='NAME', value='fb', lineno=12, index=455, end=457)↩
+Token(type='TIMES', value='*', lineno=12, index=458, end=459)↩
+Token(type='NAME', value='fc', lineno=12, index=460, end=462)↩
+Token(type='SEMI', value=';', lineno=12, index=462, end=463)↩
+Token(type='PRINT', value='print', lineno=13, index=488, end=493)↩
+Token(type='NAME', value='fc', lineno=13, index=494, end=496)↩
+Token(type='DIVIDE', value='/', lineno=13, index=497, end=498)↩
+Token(type='NAME', value='fb', lineno=13, index=499, end=501)↩
+Token(type='SEMI', value=';', lineno=13, index=501, end=502)↩
+Token(type='PRINT', value='print', lineno=14, index=526, end=531)↩
+Token(type='PLUS', value='+', lineno=14, index=532, end=533)↩
+Token(type='NAME', value='fa', lineno=14, index=533, end=535)↩
+Token(type='SEMI', value=';', lineno=14, index=535, end=536)↩
+Token(type='PRINT', value='print', lineno=15, index=564, end=569)↩
+Token(type='MINUS', value='-', lineno=15, index=570, end=571)↩
+Token(type='NAME', value='fa', lineno=15, index=571, end=573)↩
+Token(type='SEMI', value=';', lineno=15, index=573, end=574)↩
+Token(type='PRINT', value='print', lineno=16, index=603, end=608)↩
+Token(type='NAME', value='fa', lineno=16, index=609, end=611)↩
+Token(type='PLUS', value='+', lineno=16, index=612, end=613)↩
+Token(type='NAME', value='fb', lineno=16, index=614, end=616)↩
+Token(type='TIMES', value='*', lineno=16, index=617, end=618)↩
+Token(type='NAME', value='fc', lineno=16, index=619, end=621)↩
+Token(type='SEMI', value=';', lineno=16, index=621, end=622)
+
+	
+	
+
+/* inttest.wb
+
+   Test all of the basic expressions on integers.
+*/
+
+/* Integer operations */
+
+const a = 1;          // Integer constant
+var b int = 2;        // Integer variable declaration (with value)
+var c int;            // Integer declaration (no value)
+
+c = a + b + 3;        // Assignment to an integer
+print c;              // Integer printing.  Outputs 6
+
+print a + b;          // Outputs 3
+print a - b;          // Outputs -1
+print b * c;          // Outputs 12
+print c / b;          // Outputs 3
+print +a;             // Outputs 1
+print -a;             // Outputs -1
+print -a + b;         // Outputs 1
+
+// Test of associativity
+print a + b * c;       // Outputs 13

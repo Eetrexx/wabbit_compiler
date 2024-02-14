@@ -1,255 +1,70 @@
 # High level function that takes input source text and turns it into tokens.
 # This is a natural place to use some kind of generator function.
-class Token:
-    def __init__(self, type, value, lineno, index, end):
-        self.value = value
-        self.index = index
-        self.end = end
-        self.type = type
-        self.lineno = lineno
 
-    def __repr__(self):
-        return f"Token(type='{self.type}', value='{self.value}', lineno={self.lineno}, index={self.index}, end={self.end})"
+from sly import Lexer
+
+
+class CalcLexer(Lexer):
+
+    tokens = { CONST, VAR, PRINT, BREAK, CONTINUE, IF, ELSE, WHILE, TRUE, FALSE, NAME, INTEGER, FLOAT, CHAR, PLUS, MINUS, TIMES, DIVIDE, LT, LE, GT, GE, EQ, NE, LAND, LOR, LNOT, ASSIGN, SEMI, LPAREN, RPAREN, LBRACE, RBRACE }
+
+    ignore = ' \t'
+    ignore_comment = r'//[^\n]*'
+    ignore_comment_block = r"/[*]([^*]|([*][^/]))*[*]/"
+    ignore_start_file = r'%%.*'
+
+    PLUS    = r'\+'
+    MINUS   = r'-'
+    TIMES   = r'\*'
+    DIVIDE  = r'/'
+    EQ      = r'=='
+    ASSIGN  = r'='
+    LE      = r'<='
+    LT      = r'<'
+    GE      = r'>='
+    GT      = r'>'
+    NE      = r'!='
+    LAND    = r'&&'
+    LOR     = r'\|\|'
+    LNOT    = r'!'
+    SEMI    = r';'
+    LPAREN  = r'\('
+    RPAREN  = r'\)'
+    LBRACE  = r'\{'
+    RBRACE  = r'\}'
+
+    NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
+
+    NAME['const'] = CONST
+    NAME['var'] = VAR
+    NAME['print'] = PRINT
+    NAME['break'] = BREAK
+    NAME['continue'] = CONTINUE
+    NAME['if'] = IF
+    NAME['else'] = ELSE
+    NAME['while'] = WHILE
+    NAME['true'] = TRUE
+    NAME['false'] = FALSE
+
+
+
+    FLOAT = r'(\d+\.\d+|\d+\.|\.\d+)'
+    INTEGER = r'\d+'
+    
+    CHAR = r'\'(.|\\n|\\x[a-fA-F0-9][a-fA-F0-9])\''
+
+        
+    @_(r"/[*]([^*]|([*][^/]))*[*]/")
+    def ignore_comment_block(self, t):
+        self.lineno += t.value.count('\n')
+
+    @_(r'\n+')
+    def ignore_newline(self, t):
+        self.lineno += t.value.count('\n')
 
 
 def tokenize(text):
-    ...
-    pos = 0
-    end = 0
-    index = 0
-    lineno = 2
+    lexer = CalcLexer() 
 
-    while pos < len(text) - 1:
-
-        value = ""
-        type = ""
-        if text[pos] == "_" or text[pos].isalpha():
-            index = pos
-            value += text[pos]
-            pos += 1
-            while text[pos].isalnum() or text[pos] == '_':
-                value += text[pos]  
-                pos += 1
-            end = pos
-
-            if value == 'var':
-                type = 'VAR'
-            elif value == 'const':
-                type = 'CONST'
-            elif value == 'if':
-                type = 'IF'
-            elif value == 'while':
-                type = 'WHILE'
-            elif value == 'break':
-                type = 'BREAK'
-            elif value == 'continue':
-                type = 'CONTINUE'
-            elif value == 'print':
-                type = 'PRINT'
-            elif value == 'else':
-                type = 'ELSE'
-            elif value == 'true':
-                type = 'TRUE'
-            elif value == 'false':
-                type = 'FALSE'
-            else:
-                type = 'NAME'
-
-
-        elif text[pos].isdigit() or text[pos] == '.':
-            index = pos
-            while text[pos].isdigit():
-                value += text[pos]
-                pos += 1
-
-            if text[pos] == '.':
-                type = 'FLOAT'
-                value += text[pos]
-                pos += 1
-
-            while text[pos].isdigit():
-                value += text[pos]
-                pos += 1
-
-            end = pos
-
-            if not type:
-                type = 'INTEGER'
-        elif text[pos] == '+':
-            index = pos
-            pos += 1
-            end = pos
-            value = '+'
-            type = 'PLUS'
-
-        elif text[pos] == '-':
-            index = pos
-            pos += 1
-            end = pos
-            value = '-'
-            type = 'MINUS'
-
-        elif text[pos] == '*':
-            index = pos
-            pos += 1
-            end = pos
-            value = '*'
-            type = 'TIMES'
-
-        elif text[pos] == '/':
-            if text[pos+1] == '/':
-                while text[pos] != '\n':
-                    pos += 1
-                pos += 1
-                lineno += 1
-            elif text[pos+1] == '*':
-                pos += 2
-                while text[pos] != '*' and text[pos+1] != '/':
-                    pos += 1
-                pos += 2
-
-            else:
-                index = pos
-                pos += 1
-                end = pos
-                value = '/'
-                type = 'DIVIDE'
-
-        elif text[pos] == '<':
-            index = pos
-            if text[pos+1] == '=':
-                type = 'LE'
-                value = '<='
-                pos += 2
-            else:
-                type = 'LT'
-                value = '<'
-                pos += 1
-
-            end = pos
-
-        elif text[pos] == '>':
-            index = pos
-            if text[pos+1] == '=':
-                type = 'GE'
-                value = '>='
-                pos += 2
-            else:
-                type = 'GT'
-                value = '>'
-                pos += 1
-
-            end = pos
-
-        elif text[pos] == '=':
-            index = pos
-            if text[pos+1] == '=':
-                type = 'EQ'
-                value = '=='
-                pos += 2
-            else:
-                type = 'ASSIGN'
-                value = '='
-                pos += 1
-
-            end = pos
-
-        elif text[pos] == '!':
-            index = pos
-            if text[pos+1] == '=':
-                type = 'NE'
-                value = '!='
-                pos += 2
-            else:
-                type = 'LNOT'
-                value = '!'
-                pos += 1
-
-            end = pos
-
-
-        elif text[pos] == '|' and text[pos+1] == '|':
-            index = pos
-            type = 'LOR'
-            value = '||'
-            pos += 2
-            end = pos
-
-        elif text[pos] == '&' and text[pos+1] == '&':
-            index = pos
-            type = 'LAND'
-            value = '&&'
-            pos += 2
-            end = pos
-
-
-        elif text[pos] == ';':
-            index = pos
-            type = 'SEMI'
-            value = ';'
-            pos += 1
-            end = pos
-
-        elif text[pos] == '(':
-            index = pos
-            type = 'LPAREN'
-            value = '('
-            pos += 1
-            end = pos
-
-        elif text[pos] == ')':
-            index = pos
-            type = 'RPAREN'
-            value = ')'
-            pos += 1
-            end = pos
-
-
-        elif text[pos] == '{':
-            index = pos
-            type = 'LBRACE'
-            value = '{'
-            pos += 1
-            end = pos
-
-        elif text[pos] == '}':
-            index = pos
-            type = 'RBRACE'
-            value = '}'
-            pos += 1
-            end = pos
-
-        elif text[pos] == "'":
-            index = pos
-            type = 'CHAR'
-            pos += 1
-            while text[pos] != "'":
-                value += text[pos]
-                pos += 1
-
-            pos += 1
-            end = pos
-
-        elif text[pos] == '\n':
-            while pos < len(text) - 1 and text[pos].isspace():
-                pos += 1
-
-            lineno += 1
-
-        elif text[pos].isspace():
-            while text[pos].isspace() and text[pos] != '\n':
-                pos += 1
-
-        
-        elif text[pos] == '%' and text[pos+1] == '%':
-            while text[pos] != '\n':
-                pos += 1
-            pos += 1
-            text = text[pos:]
-            pos = 0
-
-        if type:
-            tok = Token(type, value, lineno, index, end)
-            yield tok
-
-                
+    for tok in lexer.tokenize(text):
+        yield tok

@@ -6,4 +6,5 @@ print 'e' ;
 print 'l' ;
 print 'l' ;
 print 'o' ;
-
+print '\xa1';
+print '\n';
