@@ -13,8 +13,6 @@ class Char(Node):
     def __repr__(self):
         return f'Char({self.value})'
 
-    def __str__(self):
-        return self.value
 
 class Unit(Node):
     def __init__(self, lineno):
@@ -31,9 +29,6 @@ class Boolean(Node):
 
     def __repr__(self):
         return f'Boolean({self.value})'
-
-    def __str__(self):
-        return self.value
     
 class Type(Node):
 
@@ -43,9 +38,6 @@ class Type(Node):
 
     def __repr__(self):
         return f'Type({self.value})'
-
-    def __str__(self):
-        return self.value
     
     
 class Name(Node):
@@ -57,8 +49,6 @@ class Name(Node):
     def __repr__(self):
         return f'Name({self.value})'
         
-    def __str__(self):
-        return self.value
         
 class Integer(Node):
     '''
@@ -70,9 +60,6 @@ class Integer(Node):
 
     def __repr__(self):
         return f'Integer({self.value})'
-
-    def __str__(self):
-        return str(self.value)
 
 class Float(Node):
     '''
@@ -183,11 +170,16 @@ class Assignment(Node):
     def __repr__(self):
         return f'Assignment({self.location}, {self.expr})'
 
-class ContinueStmt:
+class ContinueStmt(Node):
+    def __init__(self, lineno):
+        super().__init__(lineno)
+
     def __repr__(self):
         return f'ContinueStmt()'
 
-class BreakStmt:
+class BreakStmt(Node):
+    def __init__(self, lineno):
+        super().__init__(lineno)
     def __repr__(self):
         return f'BreakStmt()'
 
@@ -214,11 +206,12 @@ class ElseStmt(Node):
         return f'ElseStmt({self.stmtlist})'
     
 
-class WhileStmt:
+class WhileStmt(Node):
 
-    def __init__(self, cond, stmtlist):
+    def __init__(self, cond, stmtlist, lineno):
         self.cond = cond
         self.stmtlist = stmtlist
+        super().__init__(lineno)
         
 
     def __repr__(self):

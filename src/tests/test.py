@@ -3,7 +3,7 @@ import sys
 from model import *
 from interp import *
 from tokenize import *
-from parser import *
+from parse import *
 from typecheck import *
 
 def main():

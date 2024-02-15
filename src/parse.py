@@ -65,15 +65,15 @@ class CalcParser(Parser):
     
     @_('WHILE expr LBRACE statements RBRACE')
     def while_statement(self, p):
-        return WhileStmt(p.expr, p.statements)
+        return WhileStmt(p.expr, p.statements, p.lineno)
 
     @_('CONTINUE SEMI')
     def continue_statement(self, p):
-        return ContinueStmt()
+        return ContinueStmt(p.lineno)
 
     @_('BREAK SEMI')
     def break_statement(self, p):
-        return BreakStmt()
+        return BreakStmt(p.lineno)
 
     @_('PRINT expr SEMI')
     def print_statement(self, p):

@@ -1,0 +1,6 @@
+%%file small_errors.wb
+print 2 + 3.4;       // Type error: int + float
+print x;             // Error. 'x' is undefined.
+
+const pi = 3.14159;
+pi = 2.0;            // Error. pi is immutable.
